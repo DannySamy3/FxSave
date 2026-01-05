@@ -63,6 +63,9 @@ export default function Home() {
   // News state
   const [newsData, setNewsData] = useState(null);
   const [showNewsPanel, setShowNewsPanel] = useState(true);
+  
+  // Economic Calendar state
+  const [showCalendar, setShowCalendar] = useState(true);
 
   const TIMEFRAMES = ["15m", "30m", "1h", "4h", "1d"];
 
@@ -770,6 +773,39 @@ export default function Home() {
             📰 Show News Panel
           </button>
         )}
+
+        {/* Economic Calendar Section - Simple & Clean */}
+        <div className={`${styles.card} ${styles.calendarCardSimple}`}>
+          <div className={styles.calendarHeaderSimple}>
+            <h3>📅 This Week's USD Events</h3>
+            <button 
+              className={styles.toggleButton}
+              onClick={() => setShowCalendar(!showCalendar)}
+            >
+              {showCalendar ? 'Hide' : 'Show'}
+            </button>
+          </div>
+          
+          {showCalendar && (
+            <div className={styles.calendarContainerSimple}>
+              <p className={styles.calendarSubtitle}>🔴 High impact events can cause big moves in XAUUSD</p>
+              {/* TradingView Light Theme - This Week Only */}
+              <div style={{ height: '350px', width: '100%', borderRadius: '8px', overflow: 'hidden' }}>
+                <iframe
+                  src="https://s.tradingview.com/embed-widget/events/?locale=en#%7B%22colorTheme%22%3A%22light%22%2C%22isTransparent%22%3Atrue%2C%22width%22%3A%22100%25%22%2C%22height%22%3A%22100%25%22%2C%22importanceFilter%22%3A%221%2C2%22%2C%22countryFilter%22%3A%22us%22%7D"
+                  title="USD Economic Events"
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    border: 'none'
+                  }}
+                  frameBorder="0"
+                  allowTransparency="true"
+                />
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* System Status */}
         {systemStatus && (

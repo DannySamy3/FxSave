@@ -1,19 +1,25 @@
 {
-  "generated_at": "2026-01-05 15:35:47 UTC",
+  "generated_at": "2026-01-05 17:13:59 UTC",
   "system_version": "2.2.0",
+  "mode": "live",
+  "prediction_count": 1,
   "predictions": {
     "1d": {
+      "timeframe": "1d",
       "direction": "DOWN",
-      "confidence": 47.41,
-      "raw_confidence": 93.01,
-      "calibration_drift": 45.6,
+      "confidence": 54.02,
+      "raw_confidence": 95.03,
+      "calibration_drift": 41.0,
+      "calibration_warning": true,
+      "drift_level": "CRITICAL",
+      "drift_risk_multiplier": 0.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "LOW_CONFIDENCE",
+      "rejection_reason": "CALIBRATION_UNSTABLE",
       "regime": "WEAK_TREND",
       "regime_details": {
-        "adx": 28.0,
-        "bbw_pct": 52.0,
-        "atr_ratio": 1.0,
+        "adx": 27.4,
+        "bbw_pct": 50.0,
+        "atr_ratio": 1.03,
         "timeframe": "1d",
         "thresholds_used": {
           "adx_strong": 30,
@@ -22,43 +28,59 @@
           "bbw_squeeze": 25
         },
         "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 28.0 > 20)"
+        "reason": "Weak Trend (ADX 27.4 > 20)"
       },
       "htf_status": "ALIGNED",
       "htf_details": {
         "reason": "Top-level timeframe",
         "parent": null
       },
-      "current_price": 4426.7,
+      "current_price": 4417.4,
       "timestamp": "2026-01-05 00:00",
       "setup": {
         "decision": "NO_TRADE",
-        "reason": "LOT_CALC_ERROR",
-        "risk_amount": 64.0,
-        "sl_dist": 151.43
+        "reason": "CALIBRATION_UNSTABLE",
+        "htf_multiplier": 0.0,
+        "risk_pct": 0.0,
+        "risk_amount": 0.0,
+        "lots": 0.0
       },
+      "candle_time": "2026-01-05T00:00:00",
       "news": {
-        "sentiment_score": 0.0,
-        "sentiment_label": "NEUTRAL",
+        "sentiment_score": 0.5,
+        "sentiment_label": "BULLISH",
         "risk_multiplier": 1.0,
         "high_impact": false,
         "headlines": [
           {
-            "source": "AlphaVantage (NULL)",
-            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "source": "Finnhub (Forexlive)",
+            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
             "sentiment": "BULLISH",
-            "sentiment_score": 0.75,
+            "sentiment_score": 0.5,
             "is_high_impact": false,
-            "published": "2026-01-04T18:40:19"
+            "published": "2026-01-05T16:12:47"
           }
-        ]
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
       }
     },
     "4h": {
-      "direction": "DOWN",
-      "confidence": 46.37,
-      "raw_confidence": 61.25,
-      "calibration_drift": 14.88,
+      "timeframe": "4h",
+      "direction": "UP",
+      "confidence": 57.76,
+      "raw_confidence": 62.81,
+      "calibration_drift": 5.05,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
       "rejection_reason": "REGIME_FILTER",
       "regime": "UNKNOWN",
@@ -71,44 +93,58 @@
         "reason": "Parent 1d is NO_TRADE",
         "parent": "1d",
         "parent_direction": "DOWN",
-        "parent_reason": "LOW_CONFIDENCE"
+        "parent_reason": "CALIBRATION_UNSTABLE"
       },
-      "current_price": 4426.7,
+      "current_price": 4430.4,
       "timestamp": "2026-01-05 12:00",
       "setup": {
         "decision": "NO_TRADE",
         "reason": "HTF_CONFLICT",
         "htf_multiplier": 0.0
       },
+      "candle_time": "2026-01-05T12:00:00+00:00",
       "news": {
-        "sentiment_score": 0.0,
-        "sentiment_label": "NEUTRAL",
+        "sentiment_score": 0.5,
+        "sentiment_label": "BULLISH",
         "risk_multiplier": 1.0,
         "high_impact": false,
         "headlines": [
           {
-            "source": "AlphaVantage (NULL)",
-            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "source": "Finnhub (Forexlive)",
+            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
             "sentiment": "BULLISH",
-            "sentiment_score": 0.75,
+            "sentiment_score": 0.5,
             "is_high_impact": false,
-            "published": "2026-01-04T18:40:19"
+            "published": "2026-01-05T16:12:47"
           }
-        ]
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
       }
     },
     "1h": {
-      "direction": "UP",
-      "confidence": 51.27,
-      "raw_confidence": 50.27,
-      "calibration_drift": 0.99,
+      "timeframe": "1h",
+      "direction": "DOWN",
+      "confidence": 49.39,
+      "raw_confidence": 64.03,
+      "calibration_drift": 14.64,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
       "rejection_reason": "LOW_CONFIDENCE",
       "regime": "WEAK_TREND",
       "regime_details": {
-        "adx": 30.0,
-        "bbw_pct": 94.0,
-        "atr_ratio": 0.79,
+        "adx": 27.5,
+        "bbw_pct": 86.0,
+        "atr_ratio": 0.82,
         "timeframe": "1h",
         "thresholds_used": {
           "adx_strong": 40,
@@ -117,51 +153,65 @@
           "bbw_squeeze": 20
         },
         "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 30.0 > 25)"
+        "reason": "Weak Trend (ADX 27.5 > 25)"
       },
       "htf_status": "HARD_CONFLICT",
       "htf_details": {
         "reason": "Parent 4h is NO_TRADE",
         "parent": "4h",
-        "parent_direction": "DOWN",
+        "parent_direction": "UP",
         "parent_reason": "REGIME_FILTER"
       },
-      "current_price": 4426.7,
-      "timestamp": "2026-01-05 12:00",
+      "current_price": 4430.8,
+      "timestamp": "2026-01-05 14:00",
       "setup": {
         "decision": "NO_TRADE",
         "reason": "HTF_CONFLICT",
         "htf_multiplier": 0.0
       },
+      "candle_time": "2026-01-05T14:00:00+00:00",
       "news": {
-        "sentiment_score": 0.0,
-        "sentiment_label": "NEUTRAL",
+        "sentiment_score": 0.5,
+        "sentiment_label": "BULLISH",
         "risk_multiplier": 1.0,
         "high_impact": false,
         "headlines": [
           {
-            "source": "AlphaVantage (NULL)",
-            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "source": "Finnhub (Forexlive)",
+            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
             "sentiment": "BULLISH",
-            "sentiment_score": 0.75,
+            "sentiment_score": 0.5,
             "is_high_impact": false,
-            "published": "2026-01-04T18:40:19"
+            "published": "2026-01-05T16:12:47"
           }
-        ]
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
       }
     },
     "30m": {
+      "timeframe": "30m",
       "direction": "UP",
-      "confidence": 65.62,
-      "raw_confidence": 79.96,
-      "calibration_drift": 14.33,
+      "confidence": 54.39,
+      "raw_confidence": 66.51,
+      "calibration_drift": 12.12,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "HTF_CONFLICT",
+      "rejection_reason": "LOW_CONFIDENCE",
       "regime": "WEAK_TREND",
       "regime_details": {
-        "adx": 33.2,
-        "bbw_pct": 2.0,
-        "atr_ratio": 0.88,
+        "adx": 29.2,
+        "bbw_pct": 0.0,
+        "atr_ratio": 1.02,
         "timeframe": "30m",
         "thresholds_used": {
           "adx_strong": 42,
@@ -169,52 +219,66 @@
           "atr_spike": 2.8,
           "bbw_squeeze": 18
         },
-        "trend_direction": "NEUTRAL",
-        "reason": "Weak Trend (ADX 33.2 > 28)"
+        "trend_direction": "BULLISH",
+        "reason": "Weak Trend (ADX 29.2 > 28)"
       },
       "htf_status": "HARD_CONFLICT",
       "htf_details": {
         "reason": "Parent 1h is NO_TRADE",
         "parent": "1h",
-        "parent_direction": "UP",
+        "parent_direction": "DOWN",
         "parent_reason": "LOW_CONFIDENCE"
       },
-      "current_price": 4426.8,
-      "timestamp": "2026-01-05 12:00",
+      "current_price": 4434.6,
+      "timestamp": "2026-01-05 14:00",
       "setup": {
         "decision": "NO_TRADE",
         "reason": "HTF_CONFLICT",
         "htf_multiplier": 0.0
       },
+      "candle_time": "2026-01-05T14:00:00+00:00",
       "news": {
-        "sentiment_score": 0.0,
-        "sentiment_label": "NEUTRAL",
+        "sentiment_score": 0.5,
+        "sentiment_label": "BULLISH",
         "risk_multiplier": 1.0,
         "high_impact": false,
         "headlines": [
           {
-            "source": "AlphaVantage (NULL)",
-            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "source": "Finnhub (Forexlive)",
+            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
             "sentiment": "BULLISH",
-            "sentiment_score": 0.75,
+            "sentiment_score": 0.5,
             "is_high_impact": false,
-            "published": "2026-01-04T18:40:19"
+            "published": "2026-01-05T16:12:47"
           }
-        ]
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
       }
     },
     "15m": {
-      "direction": "UP",
-      "confidence": 51.74,
-      "raw_confidence": 52.2,
-      "calibration_drift": 0.46,
+      "timeframe": "15m",
+      "direction": "DOWN",
+      "confidence": 48.26,
+      "raw_confidence": 52.83,
+      "calibration_drift": 4.57,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
       "rejection_reason": "LOW_CONFIDENCE",
       "regime": "WEAK_TREND",
       "regime_details": {
-        "adx": 37.6,
-        "bbw_pct": 18.0,
-        "atr_ratio": 0.8,
+        "adx": 31.5,
+        "bbw_pct": 72.0,
+        "atr_ratio": 1.13,
         "timeframe": "15m",
         "thresholds_used": {
           "adx_strong": 45,
@@ -222,57 +286,67 @@
           "atr_spike": 3.0,
           "bbw_squeeze": 15
         },
-        "trend_direction": "NEUTRAL",
-        "reason": "Weak Trend (ADX 37.6 > 30)"
+        "trend_direction": "BULLISH",
+        "reason": "Weak Trend (ADX 31.5 > 30)"
       },
       "htf_status": "HARD_CONFLICT",
       "htf_details": {
         "reason": "Parent 30m is NO_TRADE",
         "parent": "30m",
         "parent_direction": "UP",
-        "parent_reason": "HTF_CONFLICT"
+        "parent_reason": "LOW_CONFIDENCE"
       },
-      "current_price": 4426.8,
-      "timestamp": "2026-01-05 12:15",
+      "current_price": 4434.9,
+      "timestamp": "2026-01-05 14:00",
       "setup": {
         "decision": "NO_TRADE",
         "reason": "HTF_CONFLICT",
         "htf_multiplier": 0.0
       },
+      "candle_time": "2026-01-05T14:00:00+00:00",
       "news": {
-        "sentiment_score": 0.0,
-        "sentiment_label": "NEUTRAL",
+        "sentiment_score": 0.5,
+        "sentiment_label": "BULLISH",
         "risk_multiplier": 1.0,
         "high_impact": false,
         "headlines": [
           {
-            "source": "AlphaVantage (NULL)",
-            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "source": "Finnhub (Forexlive)",
+            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
             "sentiment": "BULLISH",
-            "sentiment_score": 0.75,
+            "sentiment_score": 0.5,
             "is_high_impact": false,
-            "published": "2026-01-04T18:40:19"
+            "published": "2026-01-05T16:12:47"
           }
-        ]
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
       }
     }
   },
   "news": {
-    "sentiment_score": 0.0,
-    "sentiment_label": "NEUTRAL",
-    "bullish_count": 0,
+    "sentiment_score": 0.5,
+    "sentiment_label": "BULLISH",
+    "bullish_count": 1,
     "bearish_count": 0,
     "neutral_count": 0,
     "high_impact_events": [],
     "upcoming_events": [],
     "headlines": [
       {
-        "source": "AlphaVantage (NULL)",
-        "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+        "source": "Finnhub (Forexlive)",
+        "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
         "sentiment": "BULLISH",
-        "sentiment_score": 0.75,
+        "sentiment_score": 0.5,
         "is_high_impact": false,
-        "published": "2026-01-04T18:40:19"
+        "published": "2026-01-05T16:12:47"
       }
     ],
     "can_trade": true,

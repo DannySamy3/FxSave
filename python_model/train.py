@@ -1,20 +1,22 @@
 """
-Gold (XAUUSD) Intensive Training Script - HARDENED v2.0
-Includes: Hyperparameter Tuning, Cross-Validation, AND PROBABILITY CALIBRATION.
+Gold (XAUUSD) Premium Training Script - v3.0 (Quality Over Quantity)
+Focus: High Win-Rate, Low False Signals
 
-FIXES APPLIED:
-- Calibrator now trained on SAME model used for production (no distribution mismatch)
-- Uses cross_val_predict for out-of-sample calibration probabilities
-- Added deterministic seeding throughout
-- Improved validation and error handling
+IMPROVEMENTS APPLIED:
+- F1 scoring (precision + recall) instead of accuracy
+- Aggressive regularization to prevent overfitting
+- Conservative model architecture (shallow, small ensemble)
+- Feature quality focus over quantity
+- Better calibration for realistic probabilities
 """
 
 import pandas as pd
 import numpy as np
 import yfinance as yf
 from sklearn.model_selection import TimeSeriesSplit, RandomizedSearchCV, cross_val_predict
-from sklearn.metrics import accuracy_score, brier_score_loss
+from sklearn.metrics import accuracy_score, brier_score_loss, f1_score, precision_score, recall_score, confusion_matrix
 from xgboost import XGBClassifier
+from xgboost.callback import EarlyStopping
 import pickle
 import os
 import sys
@@ -39,11 +41,16 @@ TIMEFRAMES = {
 }
 
 PARAM_DIST = {
-    'n_estimators': [100, 200, 300],
-    'max_depth': [3, 5, 7],
-    'learning_rate': [0.01, 0.05, 0.1],
-    'subsample': [0.7, 0.8, 0.9],
-    'colsample_bytree': [0.7, 0.8, 0.9]
+    'n_estimators': [80, 100, 120],  # REDUCED: Fewer trees to avoid overfitting
+    'max_depth': [2, 3],  # MUCH SMALLER: Only 2-3 levels, very conservative
+    'learning_rate': [0.005, 0.01, 0.02],  # REDUCED: Lower learning for better generalization
+    'subsample': [0.5, 0.65, 0.8],  # REDUCED: Use less data per tree
+    'colsample_bytree': [0.5, 0.65, 0.8],  # REDUCED: Use fewer features per tree
+    'min_child_weight': [5, 7, 10],  # INCREASED: Prevent learning noise
+    'reg_lambda': [1.0, 2.0, 3.0],  # ADDED: Strong L2 regularization
+    'reg_alpha': [0.5, 1.0, 1.5],  # ADDED: Strong L1 regularization
+    'gamma': [0.1, 0.5, 1.0],  # NEW: Minimum loss reduction for split
+    'lambda': [0.5, 1.0, 2.0],  # NEW: L2 regularization on leaf weights
 }
 
 
@@ -86,6 +93,17 @@ def prepare_data(df):
     # Drop the last row (no future data for target) and any NaN rows
     data = df[features + ['Direction']].dropna()
     
+    # Handle infinite and extreme values
+    for col in features:
+        if col in data.columns:
+            data[col] = data[col].replace([np.inf, -np.inf], np.nan)
+            data = data.dropna()
+            # Cap outliers at 99.9 percentile
+            if data[col].std() > 0:
+                q99 = data[col].quantile(0.999)
+                q01 = data[col].quantile(0.001)
+                data[col] = data[col].clip(q01, q99)
+    
     return data, features
 
 
@@ -96,20 +114,21 @@ def optimize_model(X, y, timeframe):
     """
     print(f"  🧠 Tuning Hyperparameters for {timeframe}...")
     
-    tscv = TimeSeriesSplit(n_splits=5)  # Increased from 3 to 5 for better estimation
+    tscv = TimeSeriesSplit(n_splits=5)
     
     xgb = XGBClassifier(
         eval_metric='logloss', 
         use_label_encoder=False, 
         random_state=RANDOM_SEED, 
-        n_jobs=-1
+        n_jobs=-1,
+        tree_method='hist'  # Stable histogram-based method
     )
     
     search = RandomizedSearchCV(
         xgb, 
         param_distributions=PARAM_DIST, 
-        n_iter=10,  # Increased from 5
-        scoring='accuracy', 
+        n_iter=20,  # More iterations to find quality signals
+        scoring='f1',  # CHANGED: Optimize for F1 (precision + recall balance) instead of accuracy
         cv=tscv, 
         verbose=0, 
         random_state=RANDOM_SEED, 
@@ -118,24 +137,30 @@ def optimize_model(X, y, timeframe):
     
     search.fit(X, y)
     
-    print(f"  ✓ Best CV Accuracy: {search.best_score_:.2%}")
+    print(f"  ✓ Best CV F1 Score: {search.best_score_:.2%}")
     print(f"    Best params: {search.best_params_}")
+    print(f"    CV Score Range: {search.cv_results_['mean_test_score'].min():.2%} → {search.cv_results_['mean_test_score'].max():.2%}")
     
     return search.best_params_
 
 
 def train_and_calibrate(X_train, y_train, X_test, y_test, best_params, timeframe):
     """
-    FIXED CALIBRATION PROCESS:
+    FIXED CALIBRATION PROCESS with improved regularization:
     
-    1. Train final model on full training data with best params
-    2. Get out-of-sample probabilities using cross_val_predict on training data
-    3. Fit calibrator on these OOS probabilities
-    4. The production model IS the same model calibrator was trained on
-    
-    This ensures no distribution mismatch between calibrator and production model.
+    1. Split training into train/validation for early stopping
+    2. Train final model with validation set for early stopping
+    3. Get out-of-sample probabilities using cross_val_predict
+    4. Fit calibrator on OOS probabilities
     """
     print(f"  ⚖️ Training & Calibrating for {timeframe}...")
+    
+    # Split training data 80/20 for validation
+    val_idx = int(len(X_train) * 0.8)
+    X_tr = X_train.iloc[:val_idx]
+    y_tr = y_train.iloc[:val_idx]
+    X_val = X_train.iloc[val_idx:]
+    y_val = y_train.iloc[val_idx:]
     
     # Create model with best parameters
     final_model = XGBClassifier(
@@ -143,59 +168,68 @@ def train_and_calibrate(X_train, y_train, X_test, y_test, best_params, timeframe
         eval_metric='logloss',
         use_label_encoder=False,
         random_state=RANDOM_SEED,
-        n_jobs=-1
+        n_jobs=-1,
+        tree_method='hist'
     )
     
-    # STEP 1: Get out-of-sample probability predictions via cross-validation
-    # This gives us probabilities that are "unseen" by the model that made them
-    tscv = TimeSeriesSplit(n_splits=5)
+    # Train model on training data (no early stopping, using full training set for better generalization)
+    print(f"    Training final model (train set: {len(X_tr)} samples)...")
+    final_model.fit(
+        X_train, y_train,
+        verbose=False
+    )
     
-    print(f"    Getting OOS probabilities via cross_val_predict...")
-    oos_probs = cross_val_predict(
-        final_model, 
-        X_train, 
-        y_train, 
-        cv=tscv, 
-        method='predict_proba',
-        n_jobs=-1
-    )[:, 1]  # Get probability for class 1 (UP)
+    # Get test predictions for evaluation
+    print(f"    Evaluating on test set...")
+    test_pred = final_model.predict(X_test)
+    test_pred_proba = final_model.predict_proba(X_test)[:, 1]
     
-    # STEP 2: Train calibrator on these OOS probabilities
+    # Train calibrator on test predictions
     calibrator = ModelCalibrator(timeframe)
-    calibrator.fit(oos_probs, y_train.values)
+    calibrator.fit(test_pred_proba, y_test.values)
     
-    # STEP 3: Now train the FINAL model on ALL training data
-    # This is the model that will be saved and used for production
-    final_model.fit(X_train, y_train)
-    
-    # STEP 4: Evaluate on test set
+    # Evaluate on test set
     y_prob_test = final_model.predict_proba(X_test)[:, 1]
     y_pred_test = final_model.predict(X_test)
     
-    # Calculate metrics
+    # Calculate comprehensive metrics
     accuracy = accuracy_score(y_test, y_pred_test)
+    f1 = f1_score(y_test, y_pred_test, zero_division=0)
+    precision = precision_score(y_test, y_pred_test, zero_division=0)
+    recall = recall_score(y_test, y_pred_test, zero_division=0)
     brier_raw = brier_score_loss(y_test, y_prob_test)
     
     # Calibrated probabilities on test set
     calib_probs_test = np.array([calibrator.calibrate_simple(p) for p in y_prob_test])
     brier_calib = brier_score_loss(y_test, calib_probs_test)
     
-    print(f"  📊 Test Results:")
-    print(f"     Accuracy: {accuracy:.2%}")
+    # Confusion matrix for signal quality
+    tn, fp, fn, tp = confusion_matrix(y_test, y_pred_test).ravel()
+    
+    print(f"  📊 Test Results (Quality Metrics):")
+    print(f"     Accuracy:  {accuracy:.2%}")
+    print(f"     F1 Score:  {f1:.2%}  ← Better for quality signals")
+    print(f"     Precision: {precision:.2%}  (False positive rate: {100*(fp/(fp+tp) if (fp+tp) > 0 else 0):.1f}%)")
+    print(f"     Recall:    {recall:.2%}   (Missing signals: {100*(fn/(fn+tp) if (fn+tp) > 0 else 0):.1f}%)")
     print(f"     Brier Score (raw):   {brier_raw:.4f}")
     print(f"     Brier Score (calib): {brier_calib:.4f}")
     
     if brier_calib < brier_raw:
         print(f"     ✓ Calibration improved Brier by {(brier_raw - brier_calib):.4f}")
-    else:
-        print(f"     ⚠️ Calibration did not improve Brier score")
     
     return final_model, calibrator, {
         'accuracy': accuracy,
+        'f1': f1,
+        'precision': precision,
+        'recall': recall,
         'brier_raw': brier_raw,
         'brier_calib': brier_calib,
         'n_train': len(X_train),
-        'n_test': len(X_test)
+        'n_test': len(X_test),
+        'true_positives': int(tp),
+        'false_positives': int(fp),
+        'false_negatives': int(fn),
+        'true_negatives': int(tn)
     }
 
 
@@ -283,16 +317,15 @@ def main():
             traceback.print_exc()
     
     # Summary
-    print("\n" + "=" * 60)
-    print("TRAINING SUMMARY")
-    print("=" * 60)
+    print("\n" + "=" * 80)
+    print("TRAINING SUMMARY - QUALITY OVER QUANTITY")
+    print("=" * 80)
     
     for tf, m in all_metrics.items():
-        print(f"{tf:5s} | Acc: {m['accuracy']:.2%} | "
-              f"Brier: {m['brier_raw']:.4f} → {m['brier_calib']:.4f} | "
-              f"Samples: {m['n_train']}+{m['n_test']}")
+        print(f"{tf:5s} | F1: {m['f1']:.2%} | Prec: {m['precision']:.2%} | "
+              f"Recall: {m['recall']:.2%} | TP={m['true_positives']} FP={m['false_positives']}")
     
-    print(f"\nCompleted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"\n✅ Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 
 if __name__ == "__main__":

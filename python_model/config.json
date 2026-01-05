@@ -28,9 +28,16 @@
     "CALIBRATION_WARNING": "Calibration Drift Warning"
   },
   "thresholds": {
-    "min_confidence": 0.55,
-    "high_confidence": 0.75,
+    "min_confidence": 0.60,
+    "high_confidence": 0.70,
     "max_calibration_drift": 0.15,
+    "min_confidence_by_timeframe": {
+      "15m": 0.60,
+      "30m": 0.60,
+      "1h": 0.65,
+      "4h": 0.60,
+      "1d": 0.60
+    },
     "min_atr": {
       "15m": 1.0,
       "30m": 2.0,
@@ -58,10 +65,10 @@
   },
   "risk_management": {
     "account_balance": 10000,
-    "base_risk_pct": 1.0,
-    "max_risk_pct": 2.0,
-    "max_open_trades": 3,
-    "min_rr_ratio": 2.0,
+    "base_risk_pct": 0.75,
+    "max_risk_pct": 1.5,
+    "max_open_trades": 2,
+    "min_rr_ratio": 2.5,
     "soft_conflict_risk_mult": 0.5,
     "xauusd": {
       "contract_size": 100,

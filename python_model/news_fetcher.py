@@ -42,25 +42,54 @@ DEFAULT_CONFIG = {
     'max_headlines': 20
 }
 
-# Gold-related keywords for filtering
-GOLD_KEYWORDS = [
+# Gold and USD related keywords for filtering (affects XAUUSD trading)
+GOLD_USD_KEYWORDS = [
+    # Gold specific
     'gold', 'xauusd', 'xau/usd', 'precious metal', 'bullion',
     'gold price', 'gold futures', 'comex gold', 'spot gold',
     'gold demand', 'gold supply', 'central bank gold',
-    'fed', 'federal reserve', 'interest rate', 'inflation',
-    'cpi', 'consumer price', 'unemployment', 'non-farm',
-    'dollar', 'usd', 'dxy', 'treasury', 'yield',
+    # USD/Forex specific (CRITICAL for XAUUSD)
+    'dollar', 'usd', 'dxy', 'dollar index', 'greenback',
+    'forex', 'fx', 'currency', 'exchange rate',
+    # Central banks & rates (major USD movers)
+    'fed', 'federal reserve', 'fomc', 'interest rate', 'rate decision',
+    'rate hike', 'rate cut', 'hawkish', 'dovish', 'monetary policy',
+    'powell', 'fed chair', 'fed meeting',
+    # Economic data (USD movers)
+    'inflation', 'cpi', 'pce', 'consumer price', 
+    'unemployment', 'non-farm', 'nfp', 'payroll', 'jobs report',
+    'gdp', 'retail sales', 'ism', 'pmi',
+    # Treasury/yields (inverse gold correlation)
+    'treasury', 'yield', 'bond', 't-bill', '10-year', '2-year',
+    # Safe haven flows
     'geopolitical', 'war', 'conflict', 'sanctions',
-    'safe haven', 'risk off', 'risk on'
+    'safe haven', 'risk off', 'risk on', 'risk appetite'
 ]
 
-# High-impact event keywords
-HIGH_IMPACT_KEYWORDS = [
-    'fed', 'federal reserve', 'fomc', 'interest rate', 'rate decision',
-    'rate hike', 'rate cut', 'cpi', 'inflation', 'non-farm payroll',
-    'nfp', 'unemployment', 'gdp', 'ecb', 'boe', 'bank of japan',
-    'geopolitical', 'war', 'invasion', 'sanctions', 'emergency',
-    'crash', 'crisis', 'default', 'recession'
+# XAUUSD High-Impact Events ONLY
+# These events DIRECTLY and SIGNIFICANTLY move Gold/USD price
+# Removed: ECB, BoE, BoJ (don't directly affect XAUUSD)
+XAUUSD_HIGH_IMPACT_KEYWORDS = [
+    # US Federal Reserve (THE most important for XAUUSD)
+    'fed rate', 'fomc decision', 'fomc meeting', 'fomc statement',
+    'fed decision', 'powell speaks', 'powell speech', 'fed chair',
+    'fed hike', 'fed cut', 'fed pause', 'fed pivot',
+    'rate hike', 'rate cut', 'rate decision', 'interest rate decision',
+    # US Economic Data (Major USD movers)
+    'non-farm payroll', 'nonfarm payroll', 'nfp report', 'jobs report',
+    'us cpi', 'cpi report', 'inflation report', 'pce inflation',
+    'us gdp', 'gdp report', 'us unemployment rate',
+    # Dollar-specific shocks
+    'dollar crash', 'dollar surge', 'dollar plunge', 'dxy surge',
+    # Gold-specific events
+    'gold surge', 'gold crash', 'gold plunge', 'gold rally',
+    'central bank gold', 'gold reserves', 'gold buying',
+    # Geopolitical (safe-haven triggers for Gold)
+    'war outbreak', 'military strike', 'invasion', 'nuclear',
+    'sanctions russia', 'sanctions china', 'trade war',
+    # Market crisis (flight to Gold)
+    'market crash', 'financial crisis', 'bank collapse', 'default',
+    'recession confirmed', 'emergency rate',
 ]
 
 # Commentary patterns that should NOT be marked as high impact
@@ -71,6 +100,24 @@ COMMENTARY_PATTERNS = [
     'analyst says', 'economist expects', 'strategist believes',
     'amid cooling', 'amid rising', 'amid slowing',
     'potential rate', 'potential pause',
+]
+
+# USD-ONLY keywords - For filtering news that affects USD/Dollar specifically
+# These directly impact XAUUSD (Gold vs US Dollar) trading
+USD_ONLY_KEYWORDS = [
+    # US Dollar direct mentions
+    'dollar', 'usd', 'dxy', 'dollar index', 'greenback', 'us dollar',
+    'buck',  # slang for dollar
+    # US Federal Reserve
+    'fed', 'federal reserve', 'fomc', 'powell', 'fed chair',
+    'fed meeting', 'fed rate', 'fed policy', 'fed decision',
+    # US Economic Data
+    'us inflation', 'us cpi', 'us pce', 'us gdp', 'us economy',
+    'us jobs', 'us payroll', 'nonfarm', 'non-farm', 'nfp',
+    'us unemployment', 'us retail', 'us consumer',
+    'us treasury', 'us yield', 'us bond',
+    # General US terms (must contain "us" or "american")
+    'united states', 'america', 'american',
 ]
 
 
@@ -147,15 +194,16 @@ class NewsFetcher:
         
         self._last_request_time[source] = time.time()
     
-    def _is_gold_related(self, text: str) -> bool:
-        """Check if text contains Gold/USD related keywords"""
+    def _is_gold_usd_related(self, text: str) -> bool:
+        """Check if text contains Gold/USD related keywords that impact XAUUSD trading"""
         text_lower = text.lower()
-        return any(kw in text_lower for kw in GOLD_KEYWORDS)
+        return any(kw in text_lower for kw in GOLD_USD_KEYWORDS)
     
     def _is_high_impact(self, text: str) -> bool:
         """
-        Check if text indicates high-impact event.
-        v2.2.1: Excludes commentary/market interpretation language.
+        Check if news is HIGH IMPACT for XAUUSD specifically.
+        Only flags events that genuinely and significantly move Gold/USD price.
+        Excludes: ECB, BoE, BoJ, generic market news
         """
         text_lower = text.lower()
         
@@ -163,19 +211,29 @@ class NewsFetcher:
         if any(pattern in text_lower for pattern in COMMENTARY_PATTERNS):
             return False
         
-        # Now check for actual high impact keywords
-        return any(kw in text_lower for kw in HIGH_IMPACT_KEYWORDS)
+        # Only flag if it matches XAUUSD-specific high impact events
+        return any(kw in text_lower for kw in XAUUSD_HIGH_IMPACT_KEYWORDS)
+    
+    def _is_usd_only(self, text: str) -> bool:
+        """
+        Check if text is specifically about USD/Dollar.
+        Filters out GBP, EUR, JPY, etc. news that doesn't affect XAUUSD.
+        """
+        text_lower = text.lower()
+        return any(kw in text_lower for kw in USD_ONLY_KEYWORDS)
     
     def fetch_finnhub(self) -> List[Dict]:
         """
-        Fetch news from Finnhub.io
+        Fetch forex/currency news from Finnhub.io
+        Uses Market News API with category=forex for USD-relevant news
         Free tier: 60 calls/minute
         """
         api_key = self.config.get('finnhub_api_key')
         if not api_key:
+            print("  ⚠️ Finnhub API key not configured")
             return []
         
-        cache_key = 'finnhub_gold_news'
+        cache_key = 'finnhub_forex_news'
         cached = self.cache.get(cache_key, self.config['cache_duration_minutes'])
         if cached:
             return cached
@@ -183,10 +241,10 @@ class NewsFetcher:
         try:
             self._rate_limit('finnhub')
             
-            # Fetch general market news
+            # Fetch forex/currency news - directly relevant to XAUUSD trading
             url = 'https://finnhub.io/api/v1/news'
             params = {
-                'category': 'general',
+                'category': 'forex',  # Forex category for USD/currency news
                 'token': api_key
             }
             
@@ -198,24 +256,45 @@ class NewsFetcher:
             
             news_items = response.json()
             
-            # Filter for Gold-related news
+            if not news_items:
+                print("  ⚠️ Finnhub: No forex news returned")
+                return []
+            
+            # Filter for USD-ONLY news (not GBP, EUR, JPY, etc.)
+            # Only USD affects XAUUSD trading
             filtered = []
+            usd_count = 0
             for item in news_items:
                 headline = item.get('headline', '')
                 summary = item.get('summary', '')
                 combined_text = f"{headline} {summary}"
+                source = item.get('source', 'Finnhub')
                 
-                if self._is_gold_related(combined_text):
-                    filtered.append({
-                        'source': 'Finnhub',
-                        'headline': headline,
-                        'summary': summary[:200] if summary else '',
-                        'url': item.get('url', ''),
-                        'published': datetime.fromtimestamp(item.get('datetime', 0)).isoformat(),
-                        'is_high_impact': self._is_high_impact(combined_text)
-                    })
+                # CRITICAL: Only include USD-related news for XAUUSD trading
+                if not self._is_usd_only(combined_text):
+                    continue  # Skip non-USD news (GBP, EUR, JPY, etc.)
+                
+                usd_count += 1
+                
+                # Convert UNIX timestamp to ISO format
+                unix_time = item.get('datetime', 0)
+                try:
+                    published_iso = datetime.fromtimestamp(unix_time).isoformat() if unix_time else ''
+                except:
+                    published_iso = ''
+                
+                filtered.append({
+                    'source': f'Finnhub ({source})',
+                    'headline': headline,
+                    'summary': summary[:200] if summary else '',
+                    'url': item.get('url', ''),
+                    'published': published_iso,
+                    'is_high_impact': self._is_high_impact(combined_text),
+                    'category': 'USD/Forex'
+                })
             
             self.cache.set(cache_key, filtered)
+            print(f"  ✓ Finnhub: {usd_count} USD-related articles (filtered from {len(news_items)} forex news)")
             return filtered
             
         except Exception as e:
@@ -242,7 +321,8 @@ class NewsFetcher:
             url = 'https://www.alphavantage.co/query'
             params = {
                 'function': 'NEWS_SENTIMENT',
-                'topics': 'economy_monetary,financial_markets',  # Fed, rates, gold-relevant topics
+                'tickers': 'FOREX:USD',  # USD currency news - directly impacts XAUUSD
+                'topics': 'economy_monetary,forex',  # Fed, rates, forex news
                 'apikey': api_key,
                 'limit': 50,
                 'sort': 'LATEST'
@@ -267,8 +347,9 @@ class NewsFetcher:
                 summary = item.get('summary', '')
                 combined_text = f"{headline} {summary}"
                 
-                # Filter for gold-related articles
-                if self._is_gold_related(combined_text):
+                # Include all USD/forex/economy news since they all impact XAUUSD
+                # Alpha Vantage already filtered by FOREX:USD ticker and forex/economy topics
+                if True:  # Keep all articles from FOREX:USD + economy_monetary + forex topics
                     # Get source name from authors list or use Alpha Vantage
                     source_name = 'AlphaVantage'
                     if item.get('authors'):

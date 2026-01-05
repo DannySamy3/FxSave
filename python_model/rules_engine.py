@@ -66,8 +66,10 @@ class TradeRulesEngine:
                 else:
                     return "NO_TRADE", REJECTION_CODES['REGIME_FILTER']
         
-        # Rule 2: Confidence Threshold
-        min_conf = self.thresholds.get('min_confidence', 0.55)
+        # Rule 2: Confidence Threshold (Timeframe-Specific)
+        # Use timeframe-specific thresholds if available, otherwise use global minimum
+        min_conf_by_tf = self.thresholds.get('min_confidence_by_timeframe', {})
+        min_conf = min_conf_by_tf.get(timeframe, self.thresholds.get('min_confidence', 0.52))
         
         # Convert percentage to decimal if needed
         conf_value = prediction.get('confidence', 0)

@@ -67,16 +67,31 @@ NOISE_WORDS = {
     'for', 'to', 'from', 'with', 'by', 'at', 'in', 'on', 'of',
 }
 
-# High-impact event patterns
+# XAUUSD High-impact event patterns ONLY
+# These patterns DIRECTLY and SIGNIFICANTLY move Gold/USD price
+# Removed: ecb, boe, boj (don't directly affect XAUUSD)
 HIGH_IMPACT_PATTERNS = [
-    r'\b(fed|fomc|federal reserve)\s+(meeting|decision|announce|rate)',
-    r'\b(rate\s+)(hike|cut|decision|unchanged)',
-    r'\b(cpi|inflation)\s+(report|data|release|surprise)',
-    r'\b(non.?farm|nfp|unemployment|jobs)\s+(report|data)',
-    r'\b(gdp)\s+(growth|report|data)',
-    r'\b(ecb|boe|boj)\s+(meeting|decision|rate)',
-    r'\b(geopolitical|war|invasion|sanctions)',
-    r'\b(emergency|crisis|crash|collapse)',
+    # US Fed - THE most important for XAUUSD
+    r'\b(fed|fomc|federal reserve)\s+(meeting|decision|announce|rate|statement)',
+    r'\b(fed|fomc)\s+(hike|cut|pause|pivot)',
+    r'\bpowell\s+(speaks?|speech|testimony)',
+    # US Interest rates
+    r'\b(rate\s+)(hike|cut|decision)\s+(announce|surprise|shock)',
+    # US Economic data (major USD movers)
+    r'\b(cpi|inflation)\s+(report|data|surprise|shock)',
+    r'\b(non.?farm|nfp|payroll)\s+(report|data|surprise|miss|beat)',
+    r'\b(us\s+)?gdp\s+(report|data|surprise|shock)',
+    r'\b(us\s+)?unemployment\s+rate',
+    # Dollar-specific shocks
+    r'\bdollar\s+(crash|surge|plunge|collapse)',
+    r'\bdxy\s+(crash|surge|plunge)',
+    # Gold-specific events
+    r'\bgold\s+(crash|surge|plunge|rally|collapse)',
+    r'\bcentral\s+bank\s+gold\s+(buying|purchase|reserve)',
+    # Geopolitical (safe-haven triggers)
+    r'\b(war|invasion|military strike|nuclear)',
+    # Market crisis (flight to Gold)
+    r'\b(emergency|crisis|crash|collapse)\s+(rate|market|bank)',
 ]
 
 # v2.2.1: Commentary patterns to EXCLUDE from high impact

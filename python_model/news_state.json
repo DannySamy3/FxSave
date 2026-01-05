@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-01-05T15:35:47.541588",
+  "timestamp": "2026-01-05T17:13:59.659301",
   "can_trade": true,
   "block_reason": null,
   "sentiment": {
-    "score": 0.0,
-    "label": "NEUTRAL",
-    "bullish_count": 0,
+    "score": 0.5,
+    "label": "BULLISH",
+    "bullish_count": 1,
     "bearish_count": 0,
     "neutral_count": 0
   },
@@ -14,12 +14,12 @@
   "upcoming_events": [],
   "headlines": [
     {
-      "source": "AlphaVantage (NULL)",
-      "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+      "source": "Finnhub (Forexlive)",
+      "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
       "sentiment": "BULLISH",
-      "sentiment_score": 0.75,
+      "sentiment_score": 0.5,
       "is_high_impact": false,
-      "published": "2026-01-04T18:40:19"
+      "published": "2026-01-05T16:12:47"
     }
   ],
   "news_block": {

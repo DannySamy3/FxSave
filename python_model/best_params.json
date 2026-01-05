@@ -1,0 +1,57 @@
+{
+  "15m": {
+    "subsample": 0.65,
+    "reg_lambda": 3.0,
+    "reg_alpha": 0.5,
+    "n_estimators": 80,
+    "min_child_weight": 5,
+    "max_depth": 3,
+    "learning_rate": 0.005,
+    "gamma": 1.0,
+    "colsample_bytree": 0.8
+  },
+  "30m": {
+    "subsample": 0.8,
+    "reg_lambda": 1.0,
+    "reg_alpha": 1.0,
+    "n_estimators": 80,
+    "min_child_weight": 7,
+    "max_depth": 2,
+    "learning_rate": 0.005,
+    "gamma": 1.0,
+    "colsample_bytree": 0.65
+  },
+  "1h": {
+    "subsample": 0.65,
+    "reg_lambda": 3.0,
+    "reg_alpha": 1.5,
+    "n_estimators": 80,
+    "min_child_weight": 7,
+    "max_depth": 2,
+    "learning_rate": 0.02,
+    "gamma": 1.0,
+    "colsample_bytree": 0.5
+  },
+  "4h": {
+    "subsample": 0.8,
+    "reg_lambda": 1.0,
+    "reg_alpha": 1.0,
+    "n_estimators": 80,
+    "min_child_weight": 7,
+    "max_depth": 2,
+    "learning_rate": 0.005,
+    "gamma": 1.0,
+    "colsample_bytree": 0.65
+  },
+  "1d": {
+    "subsample": 0.8,
+    "reg_lambda": 1.0,
+    "reg_alpha": 1.0,
+    "n_estimators": 80,
+    "min_child_weight": 7,
+    "max_depth": 2,
+    "learning_rate": 0.005,
+    "gamma": 1.0,
+    "colsample_bytree": 0.65
+  }
+}

@@ -1000,6 +1000,114 @@
   text-align: center;
 }
 
+/* ========================================
+   ECONOMIC CALENDAR STYLES - SIMPLE
+   ======================================== */
+
+.calendarCardSimple {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.calendarHeaderSimple {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.calendarHeaderSimple h3 {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.calendarContainerSimple {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.calendarSubtitle {
+  margin: 0 0 12px 0;
+  padding: 8px 12px;
+  background: #fef3c7;
+  border-left: 3px solid #f59e0b;
+  color: #92400e;
+  font-size: 0.85rem;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Legacy styles kept for compatibility */
+.calendarCard {
+  background: linear-gradient(145deg, #fff, #f8fafc);
+  border: 1px solid #e2e8f0;
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.calendarHeader h3 {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #1e293b;
+}
+
+.calendarContainer {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.calendarInfo {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.calendarInfo small {
+  color: #1e40af;
+  font-weight: 500;
+}
+
+.calendarLegend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.impactHigh,
+.impactMedium,
+.impactLow {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.impactHigh {
+  color: #b91c1c;
+}
+
+.impactMedium {
+  color: #d97706;
+}
+
+.impactLow {
+  color: #ca8a04;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
   .header h1 { font-size: 1.8rem; }
@@ -1016,4 +1124,6 @@
   .actionButtons { flex-direction: column; }
   .sentimentSummary { flex-direction: column; gap: 15px; }
   .sentimentBreakdown { justify-content: center; }
+  .calendarLegend { flex-direction: column; gap: 8px; align-items: center; }
 }
+

@@ -118,14 +118,26 @@ def compute_indicators(df):
     return df.dropna()
 
 def get_feature_columns():
-    """Return list of column names used for training"""
+    """Return list of column names used for training - REDUCED SET to prevent overfitting"""
+    # Using only the most stable and predictive indicators
+    # Removed redundant and highly correlated features
     return [
-        'EMA_10', 'EMA_20', 'EMA_50', 'EMA_200', 'SMA_20', 'SMA_50', 'ADX',
-        'MACD', 'MACD_Signal', 'MACD_Hist',
-        'RSI', 'Stoch_K', 'Stoch_D', 'ROC', 'TSI',
-        'ATR', 'BB_Width', 'BB_P', 'KC_High', 'KC_Low',
-        'OBV', 'MFI',
-        'Dist_EMA50', 'Dist_EMA200',
-        'Body_Size', 'Shadow_Upper', 'Shadow_Lower',
-        'Hour', 'DayOfWeek', 'Ret_1', 'Ret_3'
+        # Trend (select key ones)
+        'EMA_20', 'EMA_50', 'ADX',
+        
+        # Momentum (core only)
+        'RSI', 'MACD_Hist', 'ROC',
+        
+        # Volatility 
+        'ATR', 'BB_Width',
+        
+        # Price Action
+        'Dist_EMA50',
+        'Body_Size',
+        
+        # Time
+        'Hour',
+        
+        # Lagged returns
+        'Ret_1'
     ]
