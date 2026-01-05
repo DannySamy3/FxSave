@@ -1,355 +1,39 @@
 {
-  "generated_at": "2026-01-05 17:13:59 UTC",
+  "generated_at": "2026-01-05 20:19:06 UTC",
   "system_version": "2.2.0",
   "mode": "live",
-  "prediction_count": 1,
+  "prediction_count": 82,
   "predictions": {
     "1d": {
       "timeframe": "1d",
-      "direction": "DOWN",
-      "confidence": 54.02,
-      "raw_confidence": 95.03,
-      "calibration_drift": 41.0,
-      "calibration_warning": true,
-      "drift_level": "CRITICAL",
-      "drift_risk_multiplier": 0.0,
+      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
       "decision": "NO_TRADE",
-      "rejection_reason": "CALIBRATION_UNSTABLE",
-      "regime": "WEAK_TREND",
-      "regime_details": {
-        "adx": 27.4,
-        "bbw_pct": 50.0,
-        "atr_ratio": 1.03,
-        "timeframe": "1d",
-        "thresholds_used": {
-          "adx_strong": 30,
-          "adx_weak": 20,
-          "atr_spike": 2.0,
-          "bbw_squeeze": 25
-        },
-        "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 27.4 > 20)"
-      },
-      "htf_status": "ALIGNED",
-      "htf_details": {
-        "reason": "Top-level timeframe",
-        "parent": null
-      },
-      "current_price": 4417.4,
-      "timestamp": "2026-01-05 00:00",
-      "setup": {
-        "decision": "NO_TRADE",
-        "reason": "CALIBRATION_UNSTABLE",
-        "htf_multiplier": 0.0,
-        "risk_pct": 0.0,
-        "risk_amount": 0.0,
-        "lots": 0.0
-      },
-      "candle_time": "2026-01-05T00:00:00",
-      "news": {
-        "sentiment_score": 0.5,
-        "sentiment_label": "BULLISH",
-        "risk_multiplier": 1.0,
-        "high_impact": false,
-        "headlines": [
-          {
-            "source": "Finnhub (Forexlive)",
-            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-            "sentiment": "BULLISH",
-            "sentiment_score": 0.5,
-            "is_high_impact": false,
-            "published": "2026-01-05T16:12:47"
-          }
-        ],
-        "block_status": {
-          "is_blocked": false,
-          "can_trade": true,
-          "reason": null,
-          "details": null,
-          "ui_wording": null,
-          "event_age_minutes": null,
-          "block_expires_in_minutes": null
-        }
-      }
+      "rejection_reason": "INSUFFICIENT_DATA"
     },
     "4h": {
       "timeframe": "4h",
-      "direction": "UP",
-      "confidence": 57.76,
-      "raw_confidence": 62.81,
-      "calibration_drift": 5.05,
-      "calibration_warning": false,
-      "drift_level": "SAFE",
-      "drift_risk_multiplier": 1.0,
+      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
       "decision": "NO_TRADE",
-      "rejection_reason": "REGIME_FILTER",
-      "regime": "UNKNOWN",
-      "regime_details": {
-        "reason": "Detection error: Invalid format specifier '.1f if adx else 'N/A'' for object of type 'float'",
-        "timeframe": "4h"
-      },
-      "htf_status": "HARD_CONFLICT",
-      "htf_details": {
-        "reason": "Parent 1d is NO_TRADE",
-        "parent": "1d",
-        "parent_direction": "DOWN",
-        "parent_reason": "CALIBRATION_UNSTABLE"
-      },
-      "current_price": 4430.4,
-      "timestamp": "2026-01-05 12:00",
-      "setup": {
-        "decision": "NO_TRADE",
-        "reason": "HTF_CONFLICT",
-        "htf_multiplier": 0.0
-      },
-      "candle_time": "2026-01-05T12:00:00+00:00",
-      "news": {
-        "sentiment_score": 0.5,
-        "sentiment_label": "BULLISH",
-        "risk_multiplier": 1.0,
-        "high_impact": false,
-        "headlines": [
-          {
-            "source": "Finnhub (Forexlive)",
-            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-            "sentiment": "BULLISH",
-            "sentiment_score": 0.5,
-            "is_high_impact": false,
-            "published": "2026-01-05T16:12:47"
-          }
-        ],
-        "block_status": {
-          "is_blocked": false,
-          "can_trade": true,
-          "reason": null,
-          "details": null,
-          "ui_wording": null,
-          "event_age_minutes": null,
-          "block_expires_in_minutes": null
-        }
-      }
+      "rejection_reason": "INSUFFICIENT_DATA"
     },
     "1h": {
       "timeframe": "1h",
-      "direction": "DOWN",
-      "confidence": 49.39,
-      "raw_confidence": 64.03,
-      "calibration_drift": 14.64,
-      "calibration_warning": false,
-      "drift_level": "SAFE",
-      "drift_risk_multiplier": 1.0,
+      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
       "decision": "NO_TRADE",
-      "rejection_reason": "LOW_CONFIDENCE",
-      "regime": "WEAK_TREND",
-      "regime_details": {
-        "adx": 27.5,
-        "bbw_pct": 86.0,
-        "atr_ratio": 0.82,
-        "timeframe": "1h",
-        "thresholds_used": {
-          "adx_strong": 40,
-          "adx_weak": 25,
-          "atr_spike": 2.5,
-          "bbw_squeeze": 20
-        },
-        "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 27.5 > 25)"
-      },
-      "htf_status": "HARD_CONFLICT",
-      "htf_details": {
-        "reason": "Parent 4h is NO_TRADE",
-        "parent": "4h",
-        "parent_direction": "UP",
-        "parent_reason": "REGIME_FILTER"
-      },
-      "current_price": 4430.8,
-      "timestamp": "2026-01-05 14:00",
-      "setup": {
-        "decision": "NO_TRADE",
-        "reason": "HTF_CONFLICT",
-        "htf_multiplier": 0.0
-      },
-      "candle_time": "2026-01-05T14:00:00+00:00",
-      "news": {
-        "sentiment_score": 0.5,
-        "sentiment_label": "BULLISH",
-        "risk_multiplier": 1.0,
-        "high_impact": false,
-        "headlines": [
-          {
-            "source": "Finnhub (Forexlive)",
-            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-            "sentiment": "BULLISH",
-            "sentiment_score": 0.5,
-            "is_high_impact": false,
-            "published": "2026-01-05T16:12:47"
-          }
-        ],
-        "block_status": {
-          "is_blocked": false,
-          "can_trade": true,
-          "reason": null,
-          "details": null,
-          "ui_wording": null,
-          "event_age_minutes": null,
-          "block_expires_in_minutes": null
-        }
-      }
+      "rejection_reason": "INSUFFICIENT_DATA"
     },
     "30m": {
       "timeframe": "30m",
-      "direction": "UP",
-      "confidence": 54.39,
-      "raw_confidence": 66.51,
-      "calibration_drift": 12.12,
-      "calibration_warning": false,
-      "drift_level": "SAFE",
-      "drift_risk_multiplier": 1.0,
+      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
       "decision": "NO_TRADE",
-      "rejection_reason": "LOW_CONFIDENCE",
-      "regime": "WEAK_TREND",
-      "regime_details": {
-        "adx": 29.2,
-        "bbw_pct": 0.0,
-        "atr_ratio": 1.02,
-        "timeframe": "30m",
-        "thresholds_used": {
-          "adx_strong": 42,
-          "adx_weak": 28,
-          "atr_spike": 2.8,
-          "bbw_squeeze": 18
-        },
-        "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 29.2 > 28)"
-      },
-      "htf_status": "HARD_CONFLICT",
-      "htf_details": {
-        "reason": "Parent 1h is NO_TRADE",
-        "parent": "1h",
-        "parent_direction": "DOWN",
-        "parent_reason": "LOW_CONFIDENCE"
-      },
-      "current_price": 4434.6,
-      "timestamp": "2026-01-05 14:00",
-      "setup": {
-        "decision": "NO_TRADE",
-        "reason": "HTF_CONFLICT",
-        "htf_multiplier": 0.0
-      },
-      "candle_time": "2026-01-05T14:00:00+00:00",
-      "news": {
-        "sentiment_score": 0.5,
-        "sentiment_label": "BULLISH",
-        "risk_multiplier": 1.0,
-        "high_impact": false,
-        "headlines": [
-          {
-            "source": "Finnhub (Forexlive)",
-            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-            "sentiment": "BULLISH",
-            "sentiment_score": 0.5,
-            "is_high_impact": false,
-            "published": "2026-01-05T16:12:47"
-          }
-        ],
-        "block_status": {
-          "is_blocked": false,
-          "can_trade": true,
-          "reason": null,
-          "details": null,
-          "ui_wording": null,
-          "event_age_minutes": null,
-          "block_expires_in_minutes": null
-        }
-      }
+      "rejection_reason": "INSUFFICIENT_DATA"
     },
     "15m": {
       "timeframe": "15m",
-      "direction": "DOWN",
-      "confidence": 48.26,
-      "raw_confidence": 52.83,
-      "calibration_drift": 4.57,
-      "calibration_warning": false,
-      "drift_level": "SAFE",
-      "drift_risk_multiplier": 1.0,
+      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
       "decision": "NO_TRADE",
-      "rejection_reason": "LOW_CONFIDENCE",
-      "regime": "WEAK_TREND",
-      "regime_details": {
-        "adx": 31.5,
-        "bbw_pct": 72.0,
-        "atr_ratio": 1.13,
-        "timeframe": "15m",
-        "thresholds_used": {
-          "adx_strong": 45,
-          "adx_weak": 30,
-          "atr_spike": 3.0,
-          "bbw_squeeze": 15
-        },
-        "trend_direction": "BULLISH",
-        "reason": "Weak Trend (ADX 31.5 > 30)"
-      },
-      "htf_status": "HARD_CONFLICT",
-      "htf_details": {
-        "reason": "Parent 30m is NO_TRADE",
-        "parent": "30m",
-        "parent_direction": "UP",
-        "parent_reason": "LOW_CONFIDENCE"
-      },
-      "current_price": 4434.9,
-      "timestamp": "2026-01-05 14:00",
-      "setup": {
-        "decision": "NO_TRADE",
-        "reason": "HTF_CONFLICT",
-        "htf_multiplier": 0.0
-      },
-      "candle_time": "2026-01-05T14:00:00+00:00",
-      "news": {
-        "sentiment_score": 0.5,
-        "sentiment_label": "BULLISH",
-        "risk_multiplier": 1.0,
-        "high_impact": false,
-        "headlines": [
-          {
-            "source": "Finnhub (Forexlive)",
-            "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-            "sentiment": "BULLISH",
-            "sentiment_score": 0.5,
-            "is_high_impact": false,
-            "published": "2026-01-05T16:12:47"
-          }
-        ],
-        "block_status": {
-          "is_blocked": false,
-          "can_trade": true,
-          "reason": null,
-          "details": null,
-          "ui_wording": null,
-          "event_age_minutes": null,
-          "block_expires_in_minutes": null
-        }
-      }
+      "rejection_reason": "INSUFFICIENT_DATA"
     }
   },
-  "news": {
-    "sentiment_score": 0.5,
-    "sentiment_label": "BULLISH",
-    "bullish_count": 1,
-    "bearish_count": 0,
-    "neutral_count": 0,
-    "high_impact_events": [],
-    "upcoming_events": [],
-    "headlines": [
-      {
-        "source": "Finnhub (Forexlive)",
-        "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
-        "sentiment": "BULLISH",
-        "sentiment_score": 0.5,
-        "is_high_impact": false,
-        "published": "2026-01-05T16:12:47"
-      }
-    ],
-    "can_trade": true,
-    "block_reason": null
-  }
+  "news": null
 }
