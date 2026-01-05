@@ -1,0 +1,27 @@
+{
+  "name": "gold-xauusd-prediction",
+  "version": "1.0.0",
+  "description": "ML-powered offline Gold (XAUUSD) price prediction system with Python backend and Next.js frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "python:train": "cd python_model && python train.py",
+    "python:predict": "cd python_model && python predict.py",
+    "python:setup": "cd python_model && pip install -r requirements.txt"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

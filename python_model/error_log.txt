@@ -1,0 +1,62 @@
+﻿python.exe : Traceback 
+(most recent call last):
+At line:1 char:1
++ & "$env:LOCALAPPDATA\Pro
+grams\Python\Python312\pyt
+hon.exe" train.py 2 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (T  
+  raceback (most recent   
+  call last)::String)     
+[], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  File "D:\CODE\Gold-Trade
+\python_model\train.py", 
+line 236, in <module>
+============================================================
+Gold (XAUUSD) Price Prediction - Model Training
+============================================================
+📥 Downloading Gold data from 2020-01-01 to 2026-01-03...
+✓ Downloaded 1511 candles
+📊 Computing technical indicators...
+    main()
+  File "D:\CODE\Gold-Trade
+\python_model\train.py", 
+line 206, in main
+    gold_data = add_techni
+cal_indicators(gold_data)
+                ^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\CODE\Gold-Trade
+\python_model\train.py", 
+line 110, in 
+add_technical_indicators
+    df['Price_to_EMA10'] 
+= (close - df['EMA_10']) 
+/ df['EMA_10'] * 100
+    ~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Developer
+\AppData\Local\Programs\Py
+thon\Python312\Lib\site-pa
+ckages\pandas\core\frame.p
+y", line 4312, in 
+__setitem__
+    self._set_item_frame_v
+alue(key, value)
+  File "C:\Users\Developer
+\AppData\Local\Programs\Py
+thon\Python312\Lib\site-pa
+ckages\pandas\core\frame.p
+y", line 4470, in 
+_set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a 
+DataFrame with multiple 
+columns to the single 
+column Price_to_EMA10

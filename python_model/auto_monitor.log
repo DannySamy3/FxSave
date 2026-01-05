@@ -1,0 +1,93 @@
+[2026-01-04 12:53:58] [INFO] ======================================================================
+[2026-01-04 12:53:58] [INFO] Automated Paper Trading Monitor Started
+[2026-01-04 12:53:58] [INFO] ======================================================================
+[2026-01-04 12:53:58] [INFO] All required scripts found
+[2026-01-04 12:53:58] [INFO] Starting paper trading session...
+[2026-01-04 12:53:58] [INFO] Starting: Paper trading session
+[2026-01-04 12:53:58] [INFO] Started: Paper trading session (PID: 16088)
+[2026-01-04 12:54:00] [INFO] Paper trading started successfully
+[2026-01-04 12:54:00] [INFO] Starting calibration drift monitoring thread...
+[2026-01-04 12:54:00] [INFO] Calibration drift monitor will start in 60 seconds...
+[2026-01-04 12:54:00] [INFO] Drift monitoring thread started
+[2026-01-04 12:54:00] [INFO] Starting system integrity verification thread...
+[2026-01-04 12:54:00] [INFO] System integrity check will start in 120 seconds...
+[2026-01-04 12:54:00] [INFO] Integrity check thread started
+[2026-01-04 12:54:00] [INFO] All monitoring threads started. Waiting for paper trading to complete...
+[2026-01-04 12:55:00] [INFO] Calibration drift monitor - Cycle 1
+[2026-01-04 12:55:00] [INFO] Running: Calibration drift monitor
+[2026-01-04 12:55:03] [INFO] Completed: Calibration drift monitor
+[2026-01-04 12:55:03] [OUTPUT]   ⚠️  EXCESSIVE DRIFT DETECTED: 7 signals
+[2026-01-04 12:55:03] [OUTPUT]   ⚠️  Retrain models for: 1d, 30m
+[2026-01-04 12:55:03] [INFO] Next Calibration drift monitor check in 1800 seconds...
+[2026-01-04 12:56:00] [INFO] System integrity check - Cycle 1
+[2026-01-04 12:56:00] [INFO] Running: System integrity check
+[2026-01-04 12:56:15] [INFO] Completed: System integrity check
+[2026-01-04 12:56:15] [OUTPUT]   ✓ Schema: 23 columns (correct)
+[2026-01-04 12:56:15] [OUTPUT]   ✓ Encoding: UTF-8
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 15m  model: 0.33 MB
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 30m  model: 0.59 MB
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1h   model: 1.50 MB
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 4h   model: 0.63 MB
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1d   model: 0.65 MB
+[2026-01-04 12:56:15] [OUTPUT]   ✓ All 5/5 models present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 15m  calibrator: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 30m  calibrator: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1h   calibrator: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 4h   calibrator: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1d   calibrator: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ All 5/5 calibrators present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 15m  cache: 4,231 rows
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 30m  cache: 2,116 rows
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1h   cache: 13,718 rows
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 4h   cache: 3,716 rows
+[2026-01-04 12:56:15] [OUTPUT]   ✓ 1d   cache: 3,017 rows
+[2026-01-04 12:56:15] [OUTPUT]   ✓ News state file: Present
+[2026-01-04 12:56:15] [OUTPUT]   ✓ Last update: 2026-01-04T12:54:17.022865
+[2026-01-04 12:56:15] [OUTPUT]   ⚠ API keys: 0/3 configured (fallback will be used)
+[2026-01-04 12:56:15] [OUTPUT]   ✓ Regime detection: WEAK_TREND (ADX: 27.2)
+[2026-01-04 12:56:15] [OUTPUT]   ⚠ 1 warning(s):
+[2026-01-04 12:56:15] [INFO] Next System integrity check check in 3600 seconds...
+[2026-01-04 13:25:03] [INFO] Calibration drift monitor - Cycle 2
+[2026-01-04 13:25:03] [INFO] Running: Calibration drift monitor
+[2026-01-04 13:25:17] [INFO] Completed: Calibration drift monitor
+[2026-01-04 13:25:17] [OUTPUT]   ⚠️  EXCESSIVE DRIFT DETECTED: 7 signals
+[2026-01-04 13:25:17] [OUTPUT]   ⚠️  Retrain models for: 1d, 30m
+[2026-01-04 13:25:17] [INFO] Next Calibration drift monitor check in 1800 seconds...
+[2026-01-04 14:52:27] [INFO] System integrity check - Cycle 2
+[2026-01-04 14:52:27] [INFO] Calibration drift monitor - Cycle 3
+[2026-01-04 14:52:27] [INFO] Running: System integrity check
+[2026-01-04 14:52:27] [INFO] Running: Calibration drift monitor
+[2026-01-04 14:52:30] [INFO] Completed: Calibration drift monitor
+[2026-01-04 14:52:30] [OUTPUT]   ⚠️  EXCESSIVE DRIFT DETECTED: 17 signals
+[2026-01-04 14:52:30] [OUTPUT]   ⚠️  Retrain models for: 1d, 30m
+[2026-01-04 14:52:30] [INFO] Next Calibration drift monitor check in 1800 seconds...
+[2026-01-04 14:52:31] [INFO] Completed: System integrity check
+[2026-01-04 14:52:31] [OUTPUT]   ✓ Schema: 23 columns (correct)
+[2026-01-04 14:52:31] [OUTPUT]   ✓ Encoding: UTF-8
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 15m  model: 0.33 MB
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 30m  model: 0.59 MB
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1h   model: 1.50 MB
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 4h   model: 0.63 MB
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1d   model: 0.65 MB
+[2026-01-04 14:52:31] [OUTPUT]   ✓ All 5/5 models present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 15m  calibrator: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 30m  calibrator: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1h   calibrator: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 4h   calibrator: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1d   calibrator: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ All 5/5 calibrators present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 15m  cache: 4,231 rows
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 30m  cache: 2,116 rows
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1h   cache: 13,718 rows
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 4h   cache: 3,716 rows
+[2026-01-04 14:52:31] [OUTPUT]   ✓ 1d   cache: 3,017 rows
+[2026-01-04 14:52:31] [OUTPUT]   ✓ News state file: Present
+[2026-01-04 14:52:31] [OUTPUT]   ✓ Last update: 2026-01-04T13:51:47.015081
+[2026-01-04 14:52:31] [OUTPUT]   ⚠ API keys: 0/3 configured (fallback will be used)
+[2026-01-04 14:52:31] [OUTPUT]   ✓ Regime detection: WEAK_TREND (ADX: 27.2)
+[2026-01-04 14:52:31] [OUTPUT]   ⚠ 1 warning(s):
+[2026-01-04 14:52:31] [INFO] Next System integrity check check in 3600 seconds...
+[2026-01-04 14:57:17] [WARNING] Paper trading session ended with code 1073807364
+[2026-01-04 14:57:17] [INFO] ======================================================================
+[2026-01-04 14:57:17] [INFO] Automated Paper Trading Monitor Completed
+[2026-01-04 14:57:17] [INFO] ======================================================================

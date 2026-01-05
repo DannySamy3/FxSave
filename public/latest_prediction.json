@@ -1,0 +1,281 @@
+{
+  "generated_at": "2026-01-05 15:35:47 UTC",
+  "system_version": "2.2.0",
+  "predictions": {
+    "1d": {
+      "direction": "DOWN",
+      "confidence": 47.41,
+      "raw_confidence": 93.01,
+      "calibration_drift": 45.6,
+      "decision": "NO_TRADE",
+      "rejection_reason": "LOW_CONFIDENCE",
+      "regime": "WEAK_TREND",
+      "regime_details": {
+        "adx": 28.0,
+        "bbw_pct": 52.0,
+        "atr_ratio": 1.0,
+        "timeframe": "1d",
+        "thresholds_used": {
+          "adx_strong": 30,
+          "adx_weak": 20,
+          "atr_spike": 2.0,
+          "bbw_squeeze": 25
+        },
+        "trend_direction": "BULLISH",
+        "reason": "Weak Trend (ADX 28.0 > 20)"
+      },
+      "htf_status": "ALIGNED",
+      "htf_details": {
+        "reason": "Top-level timeframe",
+        "parent": null
+      },
+      "current_price": 4426.7,
+      "timestamp": "2026-01-05 00:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "LOT_CALC_ERROR",
+        "risk_amount": 64.0,
+        "sl_dist": 151.43
+      },
+      "news": {
+        "sentiment_score": 0.0,
+        "sentiment_label": "NEUTRAL",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "AlphaVantage (NULL)",
+            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.75,
+            "is_high_impact": false,
+            "published": "2026-01-04T18:40:19"
+          }
+        ]
+      }
+    },
+    "4h": {
+      "direction": "DOWN",
+      "confidence": 46.37,
+      "raw_confidence": 61.25,
+      "calibration_drift": 14.88,
+      "decision": "NO_TRADE",
+      "rejection_reason": "REGIME_FILTER",
+      "regime": "UNKNOWN",
+      "regime_details": {
+        "reason": "Detection error: Invalid format specifier '.1f if adx else 'N/A'' for object of type 'float'",
+        "timeframe": "4h"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 1d is NO_TRADE",
+        "parent": "1d",
+        "parent_direction": "DOWN",
+        "parent_reason": "LOW_CONFIDENCE"
+      },
+      "current_price": 4426.7,
+      "timestamp": "2026-01-05 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "HTF_CONFLICT",
+        "htf_multiplier": 0.0
+      },
+      "news": {
+        "sentiment_score": 0.0,
+        "sentiment_label": "NEUTRAL",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "AlphaVantage (NULL)",
+            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.75,
+            "is_high_impact": false,
+            "published": "2026-01-04T18:40:19"
+          }
+        ]
+      }
+    },
+    "1h": {
+      "direction": "UP",
+      "confidence": 51.27,
+      "raw_confidence": 50.27,
+      "calibration_drift": 0.99,
+      "decision": "NO_TRADE",
+      "rejection_reason": "LOW_CONFIDENCE",
+      "regime": "WEAK_TREND",
+      "regime_details": {
+        "adx": 30.0,
+        "bbw_pct": 94.0,
+        "atr_ratio": 0.79,
+        "timeframe": "1h",
+        "thresholds_used": {
+          "adx_strong": 40,
+          "adx_weak": 25,
+          "atr_spike": 2.5,
+          "bbw_squeeze": 20
+        },
+        "trend_direction": "BULLISH",
+        "reason": "Weak Trend (ADX 30.0 > 25)"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 4h is NO_TRADE",
+        "parent": "4h",
+        "parent_direction": "DOWN",
+        "parent_reason": "REGIME_FILTER"
+      },
+      "current_price": 4426.7,
+      "timestamp": "2026-01-05 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "HTF_CONFLICT",
+        "htf_multiplier": 0.0
+      },
+      "news": {
+        "sentiment_score": 0.0,
+        "sentiment_label": "NEUTRAL",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "AlphaVantage (NULL)",
+            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.75,
+            "is_high_impact": false,
+            "published": "2026-01-04T18:40:19"
+          }
+        ]
+      }
+    },
+    "30m": {
+      "direction": "UP",
+      "confidence": 65.62,
+      "raw_confidence": 79.96,
+      "calibration_drift": 14.33,
+      "decision": "NO_TRADE",
+      "rejection_reason": "HTF_CONFLICT",
+      "regime": "WEAK_TREND",
+      "regime_details": {
+        "adx": 33.2,
+        "bbw_pct": 2.0,
+        "atr_ratio": 0.88,
+        "timeframe": "30m",
+        "thresholds_used": {
+          "adx_strong": 42,
+          "adx_weak": 28,
+          "atr_spike": 2.8,
+          "bbw_squeeze": 18
+        },
+        "trend_direction": "NEUTRAL",
+        "reason": "Weak Trend (ADX 33.2 > 28)"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 1h is NO_TRADE",
+        "parent": "1h",
+        "parent_direction": "UP",
+        "parent_reason": "LOW_CONFIDENCE"
+      },
+      "current_price": 4426.8,
+      "timestamp": "2026-01-05 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "HTF_CONFLICT",
+        "htf_multiplier": 0.0
+      },
+      "news": {
+        "sentiment_score": 0.0,
+        "sentiment_label": "NEUTRAL",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "AlphaVantage (NULL)",
+            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.75,
+            "is_high_impact": false,
+            "published": "2026-01-04T18:40:19"
+          }
+        ]
+      }
+    },
+    "15m": {
+      "direction": "UP",
+      "confidence": 51.74,
+      "raw_confidence": 52.2,
+      "calibration_drift": 0.46,
+      "decision": "NO_TRADE",
+      "rejection_reason": "LOW_CONFIDENCE",
+      "regime": "WEAK_TREND",
+      "regime_details": {
+        "adx": 37.6,
+        "bbw_pct": 18.0,
+        "atr_ratio": 0.8,
+        "timeframe": "15m",
+        "thresholds_used": {
+          "adx_strong": 45,
+          "adx_weak": 30,
+          "atr_spike": 3.0,
+          "bbw_squeeze": 15
+        },
+        "trend_direction": "NEUTRAL",
+        "reason": "Weak Trend (ADX 37.6 > 30)"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 30m is NO_TRADE",
+        "parent": "30m",
+        "parent_direction": "UP",
+        "parent_reason": "HTF_CONFLICT"
+      },
+      "current_price": 4426.8,
+      "timestamp": "2026-01-05 12:15",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "HTF_CONFLICT",
+        "htf_multiplier": 0.0
+      },
+      "news": {
+        "sentiment_score": 0.0,
+        "sentiment_label": "NEUTRAL",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "AlphaVantage (NULL)",
+            "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.75,
+            "is_high_impact": false,
+            "published": "2026-01-04T18:40:19"
+          }
+        ]
+      }
+    }
+  },
+  "news": {
+    "sentiment_score": 0.0,
+    "sentiment_label": "NEUTRAL",
+    "bullish_count": 0,
+    "bearish_count": 0,
+    "neutral_count": 0,
+    "high_impact_events": [],
+    "upcoming_events": [],
+    "headlines": [
+      {
+        "source": "AlphaVantage (NULL)",
+        "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+        "sentiment": "BULLISH",
+        "sentiment_score": 0.75,
+        "is_high_impact": false,
+        "published": "2026-01-04T18:40:19"
+      }
+    ],
+    "can_trade": true,
+    "block_reason": null
+  }
+}

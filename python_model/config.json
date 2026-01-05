@@ -1,0 +1,175 @@
+{
+  "system": {
+    "version": "2.2.0",
+    "name": "Gold-Trade Pro (News-Aware)"
+  },
+  "paths": {
+    "models_dir": ".",
+    "predictions_file": "../public/latest_prediction.json",
+    "forward_test_log": "forward_test_log.csv"
+  },
+  "rejection_reasons": {
+    "LOW_CONFIDENCE": "Low Confidence Score",
+    "HTF_CONFLICT": "Higher Timeframe Conflict",
+    "BAD_RR": "Insufficient Reward/Risk Ratio",
+    "HIGH_VOLATILITY": "Extreme Volatility (News/Crash)",
+    "RANGE_MARKET": "Market in Range (No Trend)",
+    "LOW_VOLATILITY": "Low Volatility (Dead Market)",
+    "REGIME_FILTER": "Market Regime Unfavorable",
+    "SL_TOO_TIGHT": "Stop Loss Too Tight",
+    "ZERO_RISK": "Zero Risk Allocation",
+    "LOT_CALC_ERROR": "Position Size Calculation Error",
+    "INSUFFICIENT_DATA": "Insufficient Market Data",
+    "HIGH_IMPACT_NEWS": "High-Impact News Event",
+    "CALENDAR_BLACKOUT": "Economic Calendar Blackout",
+    "EVENT_IMMINENT": "Major Economic Event Imminent",
+    "NEWS_NEGATIVE_SENTIMENT": "Strong Negative News Sentiment",
+    "CALIBRATION_UNSTABLE": "Calibration Drift Exceeds Safe Limit",
+    "CALIBRATION_WARNING": "Calibration Drift Warning"
+  },
+  "thresholds": {
+    "min_confidence": 0.55,
+    "high_confidence": 0.75,
+    "max_calibration_drift": 0.15,
+    "min_atr": {
+      "15m": 1.0,
+      "30m": 2.0,
+      "1h": 3.0,
+      "4h": 6.0,
+      "1d": 12.0
+    }
+  },
+  "rules": {
+    "enable_regime_filter": true,
+    "allowed_regimes": ["STRONG_TREND", "WEAK_TREND"],
+    "block_on_conflict": true,
+    "block_on_low_atr": true,
+    "enable_cascading_htf": true
+  },
+  "calibration": {
+    "method": "isotonic",
+    "min_samples": 50,
+    "max_drift_warning": 0.15
+  },
+  "calibration_control": {
+    "safe_drift": 0.15,
+    "warning_drift": 0.25,
+    "risk_reduction_multiplier": 0.5
+  },
+  "risk_management": {
+    "account_balance": 10000,
+    "base_risk_pct": 1.0,
+    "max_risk_pct": 2.0,
+    "max_open_trades": 3,
+    "min_rr_ratio": 2.0,
+    "soft_conflict_risk_mult": 0.5,
+    "xauusd": {
+      "contract_size": 100,
+      "pip_value": 0.01,
+      "min_lot": 0.01,
+      "max_lot": 10.0,
+      "lot_step": 0.01
+    }
+  },
+  "regime_thresholds": {
+    "15m": {
+      "adx_strong": 45,
+      "adx_weak": 30,
+      "atr_spike": 3.0,
+      "bbw_squeeze": 15
+    },
+    "30m": {
+      "adx_strong": 42,
+      "adx_weak": 28,
+      "atr_spike": 2.8,
+      "bbw_squeeze": 18
+    },
+    "1h": {
+      "adx_strong": 40,
+      "adx_weak": 25,
+      "atr_spike": 2.5,
+      "bbw_squeeze": 20
+    },
+    "4h": {
+      "adx_strong": 35,
+      "adx_weak": 22,
+      "atr_spike": 2.3,
+      "bbw_squeeze": 22
+    },
+    "1d": {
+      "adx_strong": 30,
+      "adx_weak": 20,
+      "atr_spike": 2.0,
+      "bbw_squeeze": 25
+    }
+  },
+  "htf_validation": {
+    "hierarchy": ["1d", "4h", "1h", "30m", "15m"],
+    "parent_map": {
+      "15m": "30m",
+      "30m": "1h",
+      "1h": "4h",
+      "4h": "1d",
+      "1d": null
+    }
+  },
+  "news": {
+    "enabled": true,
+    "short_term_hours": 2,
+    "long_term_hours": 8,
+    "high_impact_risk_multiplier": 0.0,
+    "sentiment_confidence_factor": 0.03,
+    "enable_blackouts": true,
+    "enable_news_blocking": true,
+    "block_on_negative_sentiment": false,
+    "negative_sentiment_threshold": -0.5,
+    "api_keys": {
+      "finnhub": "",
+      "alpha_vantage": "",
+      "newsapi": ""
+    },
+    "cache_duration_minutes": 15
+  },
+  "news_control": {
+    "max_news_age_minutes": 1440,
+    "high_impact_block_minutes": 90,
+    "stale_news_policy": "IGNORE",
+    "impact_relevance_window_minutes": 180
+  },
+  "multi_timeframe": {
+    "enabled": true,
+    "hierarchical_flow": true,
+    "strict_gating": true
+  },
+  "d1_bias": {
+    "min_confidence": 0.55,
+    "neutral_threshold": 0.45,
+    "bullish_threshold": 0.55
+  },
+  "h4h1_confirmation": {
+    "min_confidence": 0.55,
+    "confirm_threshold": 0.60,
+    "reject_threshold": 0.40,
+    "require_both": false
+  },
+  "m15m5_entry": {
+    "min_structure_bars": 20,
+    "retest_tolerance_pct": 0.5,
+    "liquidity_sweep_lookback": 10,
+    "confirmation_candles": 1,
+    "trend_continuation_lookback": 5
+  },
+  "confidence_gates": {
+    "d1_min_confidence": 0.55,
+    "h4h1_min_confidence": 0.55,
+    "entry_min_confidence": 0.60,
+    "max_calibration_drift": 0.15,
+    "block_on_drift": true
+  },
+  "continuous_scheduler": {
+    "enabled": true,
+    "check_interval": 60,
+    "market_close_hour": 17,
+    "market_close_minute": 0
+  }
+}

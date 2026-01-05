@@ -1,0 +1,26 @@
+﻿============================================================
+Gold (XAUUSD) Price Prediction - Model Training
+============================================================
+📥 Downloading Gold data from 2020-01-01 to 2026-01-03...
+✓ Downloaded 1511 candles
+📊 Computing technical indicators...
+✓ Technical indicators computed
+✓ Training data created: 1498 samples
+  Positive samples (UP): 831
+  Negative samples (DOWN): 667
+
+🤖 Training XGBoost model...
+✓ Model trained
+  Training Accuracy: 0.9758
+  Testing Accuracy: 0.4867
+✓ Model saved to D:\CODE\Gold-Trade\python_model\gold_xgb_model.pkl (0.25 MB)
+✓ Historical data saved to D:\CODE\Gold-Trade\python_model\gold_data.csv
+
+============================================================
+✅ Training Complete!
+============================================================
+
+Next steps:
+1. The model is ready for predictions
+2. Run 'python predict.py' to generate latest_prediction.json
+3. The Next.js app will read from this JSON file

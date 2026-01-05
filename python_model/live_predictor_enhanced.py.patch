@@ -1,0 +1,56 @@
+# Enhanced error handling for live_predictor.py
+# This shows the key changes needed (pseudocode pattern)
+
+"""
+Key changes to predict_single_timeframe():
+
+1. Add error handling imports:
+   from prediction_errors import PredictionError, ErrorCode, FailureStage, create_no_trade_result
+
+2. Wrap data fetch with recovery:
+   try:
+       df = self.data_manager.get_data_for_prediction(timeframe, lookback=300)
+   except Exception as e:
+       error = PredictionError(ErrorCode.DATA_FETCH_FAILED, FailureStage.DATA_FETCH, ...)
+       # Try recovery (one retry)
+       try:
+           df = self.data_manager.fetch_initial_data(timeframe)  # Force refresh
+           error.recovery_success = True
+       except:
+           return create_no_trade_result(error, timeframe)
+
+3. Validate data with specific errors:
+   if df is None:
+       error = PredictionError(ErrorCode.DATA_EMPTY, ...)
+       return create_no_trade_result(error, timeframe)
+   if len(df) < 50:
+       error = PredictionError(ErrorCode.DATA_INSUFFICIENT, ...)
+       return create_no_trade_result(error, timeframe)
+
+4. Wrap feature computation:
+   try:
+       df_proc = compute_indicators(df)
+       if df_proc.empty:
+           error = PredictionError(ErrorCode.FEATURE_COMPUTE_FAILED, ...)
+           return create_no_trade_result(error, timeframe)
+   except Exception as e:
+       error = PredictionError(ErrorCode.FEATURE_COMPUTE_FAILED, ...)
+       return create_no_trade_result(error, timeframe)
+
+5. Wrap model prediction:
+   try:
+       raw_prob_up = float(model.predict_proba(X_live)[0][1])
+   except Exception as e:
+       # Try lazy reload
+       try:
+           self._load_model(timeframe)
+           model = self.models[timeframe]
+           raw_prob_up = float(model.predict_proba(X_live)[0][1])
+           error.recovery_success = True
+       except:
+           error = PredictionError(ErrorCode.MODEL_PREDICT_FAILED, ...)
+           return create_no_trade_result(error, timeframe)
+
+6. All errors log to forward_tester with error details
+"""
+

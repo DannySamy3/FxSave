@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-01-05T15:35:47.541588",
+  "can_trade": true,
+  "block_reason": null,
+  "sentiment": {
+    "score": 0.0,
+    "label": "NEUTRAL",
+    "bullish_count": 0,
+    "bearish_count": 0,
+    "neutral_count": 0
+  },
+  "risk_multiplier": 1.0,
+  "high_impact_events": [],
+  "upcoming_events": [],
+  "headlines": [
+    {
+      "source": "AlphaVantage (NULL)",
+      "headline": "Kinross Gold Corp: Steady Gold Miner Turns Quiet Momentum Into A Tactical Opportunity",
+      "sentiment": "BULLISH",
+      "sentiment_score": 0.75,
+      "is_high_impact": false,
+      "published": "2026-01-04T18:40:19"
+    }
+  ],
+  "news_block": {
+    "is_blocked": false,
+    "news_event": null,
+    "impact_level": null,
+    "minutes_remaining": null,
+    "cooldown_minutes": null,
+    "details": null,
+    "ui_wording": null
+  }
+}
