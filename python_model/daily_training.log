@@ -1,0 +1,91 @@
+[2026-01-07 07:26:08] 
+======================================================================
+[2026-01-07 07:26:08] 🤖 AUTO-TRAINER: Daily Model Update Starting
+[2026-01-07 07:26:08] ======================================================================
+[2026-01-07 07:26:08] ✅ Backed up models to D:\CODE\Gold-Trade\python_model\model_backups\backup_20260107_072608
+[2026-01-07 07:26:08] 
+📊 Training 15m...
+[2026-01-07 07:26:11] ❌ Error preparing data: Data must be 1-dimensional, got ndarray of shape (4350, 1) instead
+[2026-01-07 07:26:11]   ❌ Insufficient data
+[2026-01-07 07:26:11] 
+📊 Training 30m...
+[2026-01-07 07:26:13] ❌ Error preparing data: Data must be 1-dimensional, got ndarray of shape (2175, 1) instead
+[2026-01-07 07:26:13]   ❌ Insufficient data
+[2026-01-07 07:26:13] 
+📊 Training 1h...
+[2026-01-07 07:26:15] ❌ Error preparing data: Data must be 1-dimensional, got ndarray of shape (13721, 1) instead
+[2026-01-07 07:26:15]   ❌ Insufficient data
+[2026-01-07 07:26:15] 
+📊 Training 4h...
+[2026-01-07 07:26:17] ❌ Error preparing data: Data must be 1-dimensional, got ndarray of shape (13721, 1) instead
+[2026-01-07 07:26:17]   ❌ Insufficient data
+[2026-01-07 07:26:17] 
+📊 Training 1d...
+[2026-01-07 07:26:19] ❌ Error preparing data: Data must be 1-dimensional, got ndarray of shape (6361, 1) instead
+[2026-01-07 07:26:19]   ❌ Insufficient data
+[2026-01-07 07:26:19] 
+======================================================================
+[2026-01-07 07:26:19] DAILY TRAINING SUMMARY
+[2026-01-07 07:26:19] ======================================================================
+[2026-01-07 07:26:19] 15m  : FAILED ❌
+[2026-01-07 07:26:19] 30m  : FAILED ❌
+[2026-01-07 07:26:19] 1h   : FAILED ❌
+[2026-01-07 07:26:19] 4h   : FAILED ❌
+[2026-01-07 07:26:19] 1d   : FAILED ❌
+[2026-01-07 07:26:19] 
+✅ Deployed 0/5 models
+[2026-01-07 07:26:19] Completed: 2026-01-07 07:26:19
+
+[2026-01-07 07:27:38] 
+======================================================================
+[2026-01-07 07:27:38] 🤖 AUTO-TRAINER: Daily Model Update Starting
+[2026-01-07 07:27:38] ======================================================================
+[2026-01-07 07:27:38] ✅ Backed up models to D:\CODE\Gold-Trade\python_model\model_backups\backup_20260107_072738
+[2026-01-07 07:27:38] 
+📊 Training 15m...
+[2026-01-07 07:27:41]   ✓ Prepared 4151 samples
+[2026-01-07 07:27:44]   ✓ Model trained
+[2026-01-07 07:27:44]   📈 New Metrics - F1: 0.6802, Prec: 0.5170, Recall: 0.9938
+[2026-01-07 07:27:44]   ✅ 15m: No old model, deploying new one
+[2026-01-07 07:27:44]   💾 Saved new 15m model
+[2026-01-07 07:27:44] 
+📊 Training 30m...
+[2026-01-07 07:27:45]   ✓ Prepared 1976 samples
+[2026-01-07 07:27:46]   ✓ Model trained
+[2026-01-07 07:27:46]   📈 New Metrics - F1: 0.6974, Prec: 0.5354, Recall: 1.0000
+[2026-01-07 07:27:46]   ✅ 30m: No old model, deploying new one
+[2026-01-07 07:27:46]   💾 Saved new 30m model
+[2026-01-07 07:27:46] 
+📊 Training 1h...
+[2026-01-07 07:27:48]   ✓ Prepared 13522 samples
+[2026-01-07 07:27:48]   ✓ Model trained
+[2026-01-07 07:27:48]   📈 New Metrics - F1: 0.1159, Prec: 0.5338, Recall: 0.0650
+[2026-01-07 07:27:48]   ✅ 1h: No old model, deploying new one
+[2026-01-07 07:27:48]   💾 Saved new 1h model
+[2026-01-07 07:27:48] 
+📊 Training 4h...
+[2026-01-07 07:27:51]   ✓ Prepared 13522 samples
+[2026-01-07 07:27:51]   ✓ Model trained
+[2026-01-07 07:27:51]   📈 New Metrics - F1: 0.2365, Prec: 0.5559, Recall: 0.1502
+[2026-01-07 07:27:51]   ✅ 4h: No old model, deploying new one
+[2026-01-07 07:27:51]   💾 Saved new 4h model
+[2026-01-07 07:27:51] 
+📊 Training 1d...
+[2026-01-07 07:27:54]   ✓ Prepared 6162 samples
+[2026-01-07 07:27:54]   ✓ Model trained
+[2026-01-07 07:27:54]   📈 New Metrics - F1: 0.7099, Prec: 0.5503, Recall: 1.0000
+[2026-01-07 07:27:54]   ✅ 1d: No old model, deploying new one
+[2026-01-07 07:27:54]   💾 Saved new 1d model
+[2026-01-07 07:27:54] 
+======================================================================
+[2026-01-07 07:27:54] DAILY TRAINING SUMMARY
+[2026-01-07 07:27:54] ======================================================================
+[2026-01-07 07:27:54] 15m  : DEPLOYED ✅
+[2026-01-07 07:27:54] 30m  : DEPLOYED ✅
+[2026-01-07 07:27:54] 1h   : DEPLOYED ✅
+[2026-01-07 07:27:54] 4h   : DEPLOYED ✅
+[2026-01-07 07:27:54] 1d   : DEPLOYED ✅
+[2026-01-07 07:27:54] 
+✅ Deployed 5/5 models
+[2026-01-07 07:27:54] Completed: 2026-01-07 07:27:54
+

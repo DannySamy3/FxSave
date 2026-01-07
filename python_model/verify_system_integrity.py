@@ -34,20 +34,20 @@ def verify_system_integrity():
                 
             expected_cols = 23
             if len(header) == expected_cols:
-                print(f"   ✓ Schema: {len(header)} columns (correct)")
+                print(f"   [OK] Schema: {len(header)} columns (correct)")
             else:
                 issues.append(f"Log schema mismatch: {len(header)} columns, expected {expected_cols}")
                 print(f"   ✗ Schema: {len(header)} columns (expected {expected_cols})")
             
             # Check encoding
-            print(f"   ✓ Encoding: UTF-8")
+            print(f"   [OK] Encoding: UTF-8")
             
         except Exception as e:
             issues.append(f"Log file error: {e}")
             print(f"   ✗ Error reading log: {e}")
     else:
         warnings.append("Log file not found (will be created on first prediction)")
-        print("   ⚠ Log file not found (will be created on first prediction)")
+        print("   [WARN] Log file not found (will be created on first prediction)")
     
     # 2. Check models
     print("\n2. ML Models")
@@ -58,16 +58,16 @@ def verify_system_integrity():
         model_path = base_dir / f"xgb_{tf}.pkl"
         if model_path.exists():
             size = model_path.stat().st_size / (1024 * 1024)  # MB
-            print(f"   ✓ {tf:4s} model: {size:.2f} MB")
+            print(f"   [OK] {tf:4s} model: {size:.2f} MB")
             models_ok += 1
         else:
             issues.append(f"Model missing: {tf}")
             print(f"   ✗ {tf:4s} model: NOT FOUND")
     
     if models_ok == 5:
-        print(f"   ✓ All {models_ok}/5 models present")
+        print(f"   [OK] All {models_ok}/5 models present")
     else:
-        print(f"   ⚠ Only {models_ok}/5 models present")
+        print(f"   [WARN] Only {models_ok}/5 models present")
     
     # 3. Check calibrators
     print("\n3. Calibrators")
@@ -204,6 +204,8 @@ def verify_system_integrity():
 
 if __name__ == "__main__":
     verify_system_integrity()
+
+
 
 
 

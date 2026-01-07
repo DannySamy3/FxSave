@@ -78,7 +78,7 @@ class H4H1ConfirmationModel:
                     with open(model_path, 'rb') as f:
                         self.models[tf] = pickle.load(f)
                 except Exception as e:
-                    print(f"⚠️ Failed to load {tf} model: {e}")
+                    print(f"[WARN] Failed to load {tf} model: {e}")
             
             # Load calibrator
             calibrator = ModelCalibrator(tf)
@@ -295,4 +295,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 

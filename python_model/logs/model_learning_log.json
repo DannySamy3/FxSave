@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "timestamp": "2026-01-07T07:25:22.451607",
+    "operation": "model_learning",
+    "timeframe": "all",
+    "mode": "incremental",
+    "status": "skipped",
+    "metrics": {},
+    "rows_processed": 0,
+    "error": "No new data available"
+  }
+]

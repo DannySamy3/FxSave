@@ -144,9 +144,9 @@
     "impact_relevance_window_minutes": 180
   },
   "multi_timeframe": {
-    "enabled": true,
-    "hierarchical_flow": true,
-    "strict_gating": true
+    "enabled": false,
+    "hierarchical_flow": false,
+    "strict_gating": false
   },
   "d1_bias": {
     "min_confidence": 0.55,

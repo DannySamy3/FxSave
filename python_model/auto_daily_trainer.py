@@ -108,6 +108,10 @@ class AutoTrainer:
             if df is None or len(df) < 50:
                 return None
             
+            # Handle MultiIndex columns from yfinance
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+            
             return df.sort_index()
         except Exception as e:
             self._log(f"❌ Error fetching {timeframe} data: {e}")

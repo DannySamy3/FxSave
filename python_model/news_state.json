@@ -1,25 +1,57 @@
 {
-  "timestamp": "2026-01-05T17:13:59.659301",
+  "timestamp": "2026-01-06T15:20:21.103828",
   "can_trade": true,
   "block_reason": null,
   "sentiment": {
-    "score": 0.5,
+    "score": 0.2,
     "label": "BULLISH",
-    "bullish_count": 1,
+    "bullish_count": 2,
     "bearish_count": 0,
-    "neutral_count": 0
+    "neutral_count": 2
   },
   "risk_multiplier": 1.0,
   "high_impact_events": [],
   "upcoming_events": [],
   "headlines": [
     {
-      "source": "Finnhub (Forexlive)",
-      "headline": "US Market Open: Geopolitics and Energy Stocks Take Center Stage. The USD is mixed",
+      "source": "Mock Bloomberg",
+      "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+      "sentiment": "NEUTRAL",
+      "sentiment_score": 0.0,
+      "is_high_impact": false,
+      "published": "2026-01-06T14:55:20.551426"
+    },
+    {
+      "source": "Mock Reuters",
+      "headline": "Dollar retreats from weekly highs, supporting precious metals",
+      "sentiment": "BULLISH",
+      "sentiment_score": 0.375,
+      "is_high_impact": false,
+      "published": "2026-01-06T14:05:20.551426"
+    },
+    {
+      "source": "Mock Financial Times",
+      "headline": "Asian central banks add 45 tonnes to gold reserves in December",
       "sentiment": "BULLISH",
       "sentiment_score": 0.5,
       "is_high_impact": false,
-      "published": "2026-01-05T16:12:47"
+      "published": "2026-01-06T12:40:20.551426"
+    },
+    {
+      "source": "Mock MarketWatch",
+      "headline": "Treasury yields inch higher ahead of jobs report",
+      "sentiment": "NEUTRAL",
+      "sentiment_score": 0.0,
+      "is_high_impact": false,
+      "published": "2026-01-06T12:10:20.551426"
+    },
+    {
+      "source": "Mock WSJ",
+      "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+      "sentiment": "BULLISH",
+      "sentiment_score": 0.6,
+      "is_high_impact": false,
+      "published": "2026-01-06T09:50:20.551426"
     }
   ],
   "news_block": {

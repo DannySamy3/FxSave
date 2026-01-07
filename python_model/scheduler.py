@@ -13,7 +13,7 @@ Features:
 import time
 import threading
 import schedule
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import sys
 import signal
 import json
@@ -58,9 +58,10 @@ class PredictionScheduler:
         
         # Scheduler settings
         self.check_interval = 60  # Check every 60 seconds
-        self.enable_retraining = False
-        self.retrain_day = 'sunday'  # Weekly retraining
-        self.retrain_hour = 18  # 6 PM
+        self.enable_retraining = True  # Enable daily training
+        self.retrain_day = 'daily'  # Train daily
+        self.retrain_hour = 17  # 5 PM ET
+        self.last_training_date = None  # Track last training date
         
         # Thread for background running
         self._scheduler_thread = None
@@ -69,7 +70,7 @@ class PredictionScheduler:
     def _get_predictor(self):
         """Lazy load predictor"""
         if self.predictor is None:
-            print("🔧 Initializing predictor...")
+            print("[INIT] Initializing predictor...")
             self.predictor = LivePredictor(self.config)
         return self.predictor
     
@@ -156,11 +157,11 @@ class PredictionScheduler:
         Run a full prediction cycle for all timeframes that need updating.
         """
         print(f"\n{'='*50}")
-        print(f"⏰ Scheduler Check: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"[CHECK] Scheduler Check: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"{'='*50}")
         
         if not self.is_market_open():
-            print("💤 Market closed - skipping")
+            print("[SLEEP] Market closed - skipping")
             return
         
         predictor = self._get_predictor()
@@ -173,10 +174,10 @@ class PredictionScheduler:
                 timeframes_to_update.append(tf)
         
         if not timeframes_to_update:
-            print("✓ All timeframes up to date")
+            print("[OK] All timeframes up to date")
             return
         
-        print(f"📊 Updating: {', '.join(timeframes_to_update)}")
+        print(f"[UPDATE] Updating: {', '.join(timeframes_to_update)}")
         
         try:
             # Run full prediction (respects HTF hierarchy)
@@ -190,58 +191,81 @@ class PredictionScheduler:
             self.prediction_count += 1
             
             # Summary
-            print(f"\n✅ Prediction #{self.prediction_count} complete")
+            print(f"\n[OK] Prediction #{self.prediction_count} complete")
             
             # Print quick summary
             for tf in LivePredictor.TF_HIERARCHY:
                 if tf in results:
                     r = results[tf]
-                    icon = "✅" if r.get('decision') == 'TRADE' else "⛔"
+                    icon = "[OK]" if r.get('decision') == 'TRADE' else "[SKIP]"
                     print(f"  {tf}: {icon} {r.get('direction', 'N/A')} ({r.get('confidence', 0):.1f}%)")
             
         except Exception as e:
             self.error_count += 1
-            print(f"❌ Prediction error: {e}")
+            print(f"[ERROR] Prediction error: {e}")
             import traceback
             traceback.print_exc()
     
     def run_retraining(self):
         """
-        Run scheduled retraining (weekly).
+        Run scheduled daily training at market close (5 PM ET).
         """
         if not self.enable_retraining:
             return
         
+        # Check if already trained today
+        today = date.today()
+        if self.last_training_date == today:
+            return
+        
+        now = datetime.now()
+        
+        # Only run at training hour (5 PM ET)
+        if now.hour != self.retrain_hour or now.minute > 5:
+            return
+        
         print(f"\n{'='*50}")
-        print("🔄 SCHEDULED RETRAINING")
+        print("[TRAINING] DAILY MODEL RETRAINING")
         print(f"{'='*50}")
         
         try:
-            # Import and run training
-            from train import main as train_main
-            train_main()
+            # Import and run auto trainer
+            from auto_daily_trainer import AutoTrainer
             
-            # Reload predictor with new models
-            self.predictor = None  # Force reload
-            print("✅ Retraining complete")
+            trainer = AutoTrainer()
+            success = trainer.run_daily_training()
+            
+            if success:
+                self.last_training_date = today
+                print("[OK] Daily training complete - models updated")
+            else:
+                print("[WARN] Daily training completed but no models deployed")
             
         except Exception as e:
-            print(f"❌ Retraining failed: {e}")
+            print(f"[ERROR] Training failed: {e}")
+            import traceback
+            traceback.print_exc()
     
     def _scheduler_loop(self):
         """Main scheduler loop (runs in background thread)"""
-        print(f"🚀 Scheduler started - checking every {self.check_interval}s")
+        print(f"[START] Scheduler started - checking every {self.check_interval}s")
+        print(f"[CONFIG] Daily training: {'Enabled at ' + str(self.retrain_hour) + ':00' if self.enable_retraining else 'Disabled'}")
         
         while not self._stop_event.is_set():
             try:
+                # Run predictions
                 self.run_prediction_cycle()
+                
+                # Check if it's time for daily training
+                self.run_retraining()
+                
             except Exception as e:
-                print(f"❌ Scheduler error: {e}")
+                print(f"[ERROR] Scheduler error: {e}")
             
             # Wait for next check
             self._stop_event.wait(self.check_interval)
         
-        print("🛑 Scheduler stopped")
+        print("[STOP] Scheduler stopped")
     
     def start(self, blocking=True):
         """
@@ -254,7 +278,7 @@ class PredictionScheduler:
         self._stop_event.clear()
         
         print("=" * 60)
-        print("🏁 GOLD PREDICTION SCHEDULER")
+        print("[START] GOLD PREDICTION SCHEDULER")
         print(f"   Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"   Check interval: {self.check_interval}s")
         print(f"   Retraining: {'Enabled' if self.enable_retraining else 'Disabled'}")
@@ -270,11 +294,11 @@ class PredictionScheduler:
                 daemon=True
             )
             self._scheduler_thread.start()
-            print("📋 Scheduler running in background")
+            print("[INFO] Scheduler running in background")
     
     def stop(self):
         """Stop the scheduler"""
-        print("\n⏹️ Stopping scheduler...")
+        print("\n[STOP] Stopping scheduler...")
         self._stop_event.set()
         self.running = False
         
@@ -314,7 +338,7 @@ class SimpleCronScheduler:
             predictor = self._get_predictor()
             predictor.predict_all_timeframes(update_data=True)
         except Exception as e:
-            print(f"❌ Prediction error: {e}")
+            print(f"[ERROR] Prediction error: {e}")
     
     def setup_schedule(self):
         """Setup prediction schedule"""
@@ -328,14 +352,14 @@ class SimpleCronScheduler:
         # schedule.every().hour.at(":30").do(self.run_prediction)
         # schedule.every().hour.at(":45").do(self.run_prediction)
         
-        print("📅 Schedule configured")
+        print("[INFO] Schedule configured")
     
     def run(self):
         """Run the scheduler"""
         self.setup_schedule()
         self.running = True
         
-        print("🚀 Cron scheduler started")
+        print("[START] Cron scheduler started")
         print("   Press Ctrl+C to stop")
         
         while self.running:
@@ -345,7 +369,7 @@ class SimpleCronScheduler:
 
 def signal_handler(signum, frame):
     """Handle Ctrl+C gracefully"""
-    print("\n⏹️ Interrupt received, shutting down...")
+    print("\n[STOP] Interrupt received, shutting down...")
     sys.exit(0)
 
 
@@ -353,13 +377,13 @@ def main():
     """Main entry point for scheduler"""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Gold Prediction Scheduler')
+    parser = argparse.ArgumentParser(description='Gold Prediction Scheduler with Daily Training')
     parser.add_argument('--interval', type=int, default=60,
                         help='Check interval in seconds (default: 60)')
     parser.add_argument('--once', action='store_true',
                         help='Run once and exit')
-    parser.add_argument('--retrain', action='store_true',
-                        help='Enable weekly retraining')
+    parser.add_argument('--no-training', action='store_true',
+                        help='Disable daily model training')
     parser.add_argument('--cron', action='store_true',
                         help='Use cron-style scheduler')
     
@@ -379,10 +403,10 @@ def main():
         scheduler = SimpleCronScheduler()
         scheduler.run()
     else:
-        # Use thread-based scheduler
+        # Use thread-based scheduler with daily training enabled by default
         scheduler = PredictionScheduler()
         scheduler.check_interval = args.interval
-        scheduler.enable_retraining = args.retrain
+        scheduler.enable_retraining = not args.no_training  # Enable by default
         
         try:
             scheduler.start(blocking=True)
@@ -392,6 +416,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

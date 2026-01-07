@@ -216,11 +216,11 @@ class DataManager:
         # Add buffer to ensure overlap
         start_date = last_timestamp - timedelta(hours=4)
         
-        print(f"  📡 Fetching updates for {timeframe} since {last_timestamp}...")
+        print(f"  [FETCH] Fetching updates for {timeframe} since {last_timestamp}...")
         new_data = self._fetch_from_yahoo(timeframe, start_date=start_date)
         
         if new_data.empty:
-            print(f"  ⚠️ No new data for {timeframe}")
+            print(f"  [WARN] No new data for {timeframe}")
             return cached, 0
         
         # Filter to only truly new rows
@@ -296,7 +296,7 @@ class DataManager:
                 _, new_count = self.fetch_incremental_update(tf)
                 results[tf] = new_count
             except Exception as e:
-                print(f"  ❌ Error updating {tf}: {e}")
+                print(f"  [ERROR] Error updating {tf}: {e}")
                 results[tf] = -1
         
         return results

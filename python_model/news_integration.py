@@ -87,10 +87,10 @@ class NewsIntegration:
                 # Filter out stale news from cached results
                 fresh_news = self._filter_stale_news(self._analyzed_news, now)
                 if len(fresh_news) < len(self._analyzed_news):
-                    print(f"  ⚠️ Filtered {len(self._analyzed_news) - len(fresh_news)} stale news items")
+                    print(f"  [WARN] Filtered {len(self._analyzed_news) - len(fresh_news)} stale news items")
                 return fresh_news
         
-        print("\n📰 Fetching latest news...")
+        print("\n[NEWS] Fetching latest news...")
         
         # Fetch news
         self._current_news = self.news_fetcher.fetch_all_news()
@@ -118,7 +118,7 @@ class NewsIntegration:
         
         self._last_fetch_time = now
         
-        print(f"  ✓ Processed {len(self._analyzed_news)} fresh news items")
+        print(f"  [OK] Processed {len(self._analyzed_news)} fresh news items")
         
         return self._analyzed_news
     
@@ -615,7 +615,7 @@ if __name__ == "__main__":
     integration = NewsIntegration(config)
     
     # Get assessment
-    print("\n📊 Getting news assessment...")
+    print("\n[STATS] Getting news assessment...")
     assessment = integration.get_news_assessment(timeframe='1h')
     
     print(f"\n✅ Can Trade: {assessment['can_trade']}")

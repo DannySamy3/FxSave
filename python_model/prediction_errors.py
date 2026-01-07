@@ -155,3 +155,5 @@ def create_no_trade_result(error: PredictionError, timeframe: str) -> Dict:
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
+
+

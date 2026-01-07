@@ -94,17 +94,9 @@ class LivePredictor:
             self.news_integration = None
         
         # Initialize multi-timeframe decision engine (if enabled)
-        self.multi_timeframe_enabled = self.config.get('multi_timeframe', {}).get('enabled', False)
-        if self.multi_timeframe_enabled:
-            try:
-                self.decision_engine = TradeDecisionEngine(self.config)
-                print("[ARCH] Multi-timeframe hierarchical architecture enabled")
-            except Exception as e:
-                print(f"[WARN] Failed to initialize multi-timeframe engine: {e}")
-                self.multi_timeframe_enabled = False
-                self.decision_engine = None
-        else:
-            self.decision_engine = None
+        # Note: Disabled by default on Windows due to UTF-8 encoding issues in source files
+        self.multi_timeframe_enabled = False  # Currently disabled - multi-timeframe has emoji in source files that cause Windows encoding issues
+        self.decision_engine = None
         
         # Track prediction state
         self.last_predictions = {}

@@ -78,14 +78,14 @@ def load_artifacts(timeframe):
     # Model
     m_path = os.path.join(base_dir, f'xgb_{timeframe}.pkl')
     if not os.path.exists(m_path):
-        print(f"  ⚠️ Model not found: {m_path}")
+        print(f"  [WARN] Model not found: {m_path}")
         return None, None
         
     try:
         with open(m_path, 'rb') as f:
             model = pickle.load(f)
     except Exception as e:
-        print(f"  ❌ Failed to load model {timeframe}: {e}")
+        print(f"  [ERROR] Failed to load model {timeframe}: {e}")
         return None, None
     
     # Calibrator
@@ -93,7 +93,7 @@ def load_artifacts(timeframe):
     loaded = calibrator.load(base_dir)
     
     if not loaded:
-        print(f"  ⚠️ Calibrator not loaded for {timeframe} - using uncalibrated probs")
+        print(f"  [WARN] Calibrator not loaded for {timeframe} - using uncalibrated probs")
     
     return model, calibrator
 
@@ -115,7 +115,7 @@ def get_data(timeframe):
         return df
         
     except Exception as e:
-        print(f"  ❌ Error downloading {timeframe}: {e}")
+        print(f"  [ERROR] Error downloading {timeframe}: {e}")
         return pd.DataFrame()
 
 
@@ -212,7 +212,7 @@ def main():
     news_enabled = CONFIG.get('news', {}).get('enabled', False)
     if news_enabled:
         news_integration = get_news_integration(CONFIG)
-        print("\n📰 News integration enabled")
+        print("[NEWS] News integration enabled")
         # Refresh news data at start
         news_integration.refresh_news(force=True)
     else:
@@ -231,19 +231,19 @@ def main():
         # 1. Load Artifacts
         model, calibrator = load_artifacts(tf)
         if not model:
-            print(f"  ⚠️ Skipping {tf} - no model")
+            print(f"  [WARN] Skipping {tf} - no model")
             continue
             
         # 2. Get Data & Features
         df = get_data(tf)
         if len(df) < 50:
-            print(f"  ⚠️ Insufficient data for {tf} ({len(df)} rows)")
+            print(f"  [WARN] Insufficient data for {tf} ({len(df)} rows)")
             continue
             
         df_proc = compute_indicators(df)
         
         if df_proc.empty:
-            print(f"  ⚠️ No data after indicator computation for {tf}")
+            print(f"  [WARN] No data after indicator computation for {tf}")
             continue
             
         latest_features = df_proc.iloc[[-1]]
@@ -252,7 +252,7 @@ def main():
         
         # 3. Detect Regime (TF-aware)
         regime_state, regime_details = regime_detector.detect(df_proc, timeframe=tf)
-        print(f"  📊 Regime: {regime_state}")
+        print(f"  [REGIME] Regime: {regime_state}")
         
         # 4. Make Prediction
         X_live = latest_features[[c for c in feature_cols if c in latest_features.columns]]
@@ -278,15 +278,15 @@ def main():
         # Calibration drift check
         calibration_drift = abs(final_conf - raw_conf)
         if calibration_drift > 0.15:
-            print(f"  ⚠️ Large calibration drift: {raw_conf_pct}% → {final_conf_pct}%")
+            print(f"  [WARN] Large calibration drift: {raw_conf_pct}% → {final_conf_pct}%")
         
-        print(f"  🔮 Prediction: {direction}")
+        print(f"  [PRED] Prediction: {direction}")
         print(f"     Raw Confidence: {raw_conf_pct}%")
         print(f"     Calibrated:     {final_conf_pct}%")
         
         # 6. Check HTF Alignment (CASCADING VALIDATION)
         htf_status, htf_details = check_htf_alignment(tf, direction, results)
-        print(f"  🔗 HTF Status: {htf_status}")
+        print(f"  [LINK] HTF Status: {htf_status}")
         
         # 7. Rules Engine Check
         pred_packet = {'direction': direction, 'confidence': final_conf_pct}
@@ -359,7 +359,7 @@ def main():
                 decision = "NO_TRADE"
                 rejection_reason = setup.get("reason", "RISK_CHECK_FAILED")
         
-        print(f"  🛡️ Decision: {decision}")
+        print(f"  [DECISION] Decision: {decision}")
         if decision == "NO_TRADE":
             print(f"     Reason: {rejection_reason}")
         else:
@@ -448,9 +448,9 @@ def main():
     try:
         with open(out_path, 'w') as f:
             json.dump(final_output, f, indent=2)
-        print(f"\n✅ Saved predictions to {out_path}")
+        print(f"\n[OK] Saved predictions to {out_path}")
     except Exception as e:
-        print(f"\n❌ Error saving JSON: {e}")
+        print(f"\n[ERROR] Error saving JSON: {e}")
     
     # Summary
     print("\n" + "=" * 60)
