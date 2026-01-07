@@ -1,39 +1,539 @@
 {
-  "generated_at": "2026-01-05 20:19:06 UTC",
+  "generated_at": "2026-01-06 15:20:21 UTC",
   "system_version": "2.2.0",
   "mode": "live",
-  "prediction_count": 82,
+  "prediction_count": 1,
   "predictions": {
     "1d": {
       "timeframe": "1d",
-      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
+      "direction": "UP",
+      "confidence": 51.24,
+      "raw_confidence": 52.08,
+      "calibration_drift": 0.84,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "INSUFFICIENT_DATA"
+      "rejection_reason": "LOW_CONFIDENCE",
+      "regime": "WEAK_TREND",
+      "regime_details": {
+        "adx": 27.3,
+        "bbw_pct": 50.0,
+        "atr_ratio": 1.03,
+        "timeframe": "1d",
+        "thresholds_used": {
+          "adx_strong": 30,
+          "adx_weak": 20,
+          "atr_spike": 2.0,
+          "bbw_squeeze": 25
+        },
+        "trend_direction": "BULLISH",
+        "reason": "Weak Trend (ADX 27.3 > 20)"
+      },
+      "htf_status": "ALIGNED",
+      "htf_details": {
+        "reason": "Top-level timeframe",
+        "parent": null
+      },
+      "current_price": 4469.3,
+      "timestamp": "2026-01-06 00:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "BAD_RR",
+        "rr_actual": 2.0,
+        "rr_required": 2.5
+      },
+      "candle_time": "2026-01-06T00:00:00",
+      "news": {
+        "sentiment_score": 0.248,
+        "sentiment_label": "BULLISH",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "Mock Bloomberg",
+            "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:55:20.551426"
+          },
+          {
+            "source": "Mock Reuters",
+            "headline": "Dollar retreats from weekly highs, supporting precious metals",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.375,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:05:20.551426"
+          },
+          {
+            "source": "Mock Financial Times",
+            "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.5,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:40:20.551426"
+          },
+          {
+            "source": "Mock MarketWatch",
+            "headline": "Treasury yields inch higher ahead of jobs report",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:10:20.551426"
+          },
+          {
+            "source": "Mock WSJ",
+            "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.6,
+            "is_high_impact": false,
+            "published": "2026-01-06T09:50:20.551426"
+          }
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
+      }
     },
     "4h": {
       "timeframe": "4h",
-      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
+      "direction": "UP",
+      "confidence": 55.14,
+      "raw_confidence": 53.22,
+      "calibration_drift": 1.92,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "INSUFFICIENT_DATA"
+      "rejection_reason": "REGIME_FILTER",
+      "regime": "UNKNOWN",
+      "regime_details": {
+        "reason": "Detection error: Invalid format specifier '.1f if adx else 'N/A'' for object of type 'float'",
+        "timeframe": "4h"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 1d is NO_TRADE",
+        "parent": "1d",
+        "parent_direction": "UP",
+        "parent_reason": "LOW_CONFIDENCE"
+      },
+      "current_price": 4473.3,
+      "timestamp": "2026-01-06 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "BAD_RR",
+        "rr_actual": 2.0,
+        "rr_required": 2.5
+      },
+      "candle_time": "2026-01-06T12:00:00+00:00",
+      "news": {
+        "sentiment_score": 0.248,
+        "sentiment_label": "BULLISH",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "Mock Bloomberg",
+            "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:55:20.551426"
+          },
+          {
+            "source": "Mock Reuters",
+            "headline": "Dollar retreats from weekly highs, supporting precious metals",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.375,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:05:20.551426"
+          },
+          {
+            "source": "Mock Financial Times",
+            "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.5,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:40:20.551426"
+          },
+          {
+            "source": "Mock MarketWatch",
+            "headline": "Treasury yields inch higher ahead of jobs report",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:10:20.551426"
+          },
+          {
+            "source": "Mock WSJ",
+            "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.6,
+            "is_high_impact": false,
+            "published": "2026-01-06T09:50:20.551426"
+          }
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
+      }
     },
     "1h": {
       "timeframe": "1h",
-      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
+      "direction": "DOWN",
+      "confidence": 48.19,
+      "raw_confidence": 52.63,
+      "calibration_drift": 4.44,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "INSUFFICIENT_DATA"
+      "rejection_reason": "RANGE_MARKET",
+      "regime": "RANGE",
+      "regime_details": {
+        "adx": 24.4,
+        "bbw_pct": 0.0,
+        "atr_ratio": 0.82,
+        "timeframe": "1h",
+        "thresholds_used": {
+          "adx_strong": 40,
+          "adx_weak": 25,
+          "atr_spike": 2.5,
+          "bbw_squeeze": 20
+        },
+        "trend_direction": "BULLISH",
+        "reason": "Range + BB Squeeze (BBW percentile 0% < 20%)"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 4h is NO_TRADE",
+        "parent": "4h",
+        "parent_direction": "UP",
+        "parent_reason": "REGIME_FILTER"
+      },
+      "current_price": 4473.3,
+      "timestamp": "2026-01-06 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "BAD_RR",
+        "rr_actual": 2.0,
+        "rr_required": 2.5
+      },
+      "candle_time": "2026-01-06T12:00:00+00:00",
+      "news": {
+        "sentiment_score": 0.2,
+        "sentiment_label": "BULLISH",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "Mock Bloomberg",
+            "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:55:20.551426"
+          },
+          {
+            "source": "Mock Reuters",
+            "headline": "Dollar retreats from weekly highs, supporting precious metals",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.375,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:05:20.551426"
+          },
+          {
+            "source": "Mock Financial Times",
+            "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.5,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:40:20.551426"
+          },
+          {
+            "source": "Mock MarketWatch",
+            "headline": "Treasury yields inch higher ahead of jobs report",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:10:20.551426"
+          },
+          {
+            "source": "Mock WSJ",
+            "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.6,
+            "is_high_impact": false,
+            "published": "2026-01-06T09:50:20.551426"
+          }
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
+      }
     },
     "30m": {
       "timeframe": "30m",
-      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
+      "direction": "UP",
+      "confidence": 54.79,
+      "raw_confidence": 52.44,
+      "calibration_drift": 2.36,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "INSUFFICIENT_DATA"
+      "rejection_reason": "RANGE_MARKET",
+      "regime": "RANGE",
+      "regime_details": {
+        "adx": 13.0,
+        "bbw_pct": 12.0,
+        "atr_ratio": 0.85,
+        "timeframe": "30m",
+        "thresholds_used": {
+          "adx_strong": 42,
+          "adx_weak": 28,
+          "atr_spike": 2.8,
+          "bbw_squeeze": 18
+        },
+        "trend_direction": "BULLISH",
+        "reason": "Range + BB Squeeze (BBW percentile 12% < 18%)"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 1h is NO_TRADE",
+        "parent": "1h",
+        "parent_direction": "DOWN",
+        "parent_reason": "RANGE_MARKET"
+      },
+      "current_price": 4473.3,
+      "timestamp": "2026-01-06 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "BAD_RR",
+        "rr_actual": 2.0,
+        "rr_required": 2.5
+      },
+      "candle_time": "2026-01-06T12:00:00+00:00",
+      "news": {
+        "sentiment_score": 0.121,
+        "sentiment_label": "BULLISH",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "Mock Bloomberg",
+            "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:55:20.551426"
+          },
+          {
+            "source": "Mock Reuters",
+            "headline": "Dollar retreats from weekly highs, supporting precious metals",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.375,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:05:20.551426"
+          },
+          {
+            "source": "Mock Financial Times",
+            "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.5,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:40:20.551426"
+          },
+          {
+            "source": "Mock MarketWatch",
+            "headline": "Treasury yields inch higher ahead of jobs report",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:10:20.551426"
+          },
+          {
+            "source": "Mock WSJ",
+            "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.6,
+            "is_high_impact": false,
+            "published": "2026-01-06T09:50:20.551426"
+          }
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
+      }
     },
     "15m": {
       "timeframe": "15m",
-      "error": "Feature computation failed: 0 rows after processing (need at least 10)",
+      "direction": "UP",
+      "confidence": 54.8,
+      "raw_confidence": 52.31,
+      "calibration_drift": 2.49,
+      "calibration_warning": false,
+      "drift_level": "SAFE",
+      "drift_risk_multiplier": 1.0,
       "decision": "NO_TRADE",
-      "rejection_reason": "INSUFFICIENT_DATA"
+      "rejection_reason": "REGIME_FILTER",
+      "regime": "UNKNOWN",
+      "regime_details": {
+        "reason": "Detection error: Invalid format specifier '.1f if adx else 'N/A'' for object of type 'float'",
+        "timeframe": "15m"
+      },
+      "htf_status": "HARD_CONFLICT",
+      "htf_details": {
+        "reason": "Parent 30m is NO_TRADE",
+        "parent": "30m",
+        "parent_direction": "UP",
+        "parent_reason": "RANGE_MARKET"
+      },
+      "current_price": 4473.6,
+      "timestamp": "2026-01-06 12:00",
+      "setup": {
+        "decision": "NO_TRADE",
+        "reason": "BAD_RR",
+        "rr_actual": 2.0,
+        "rr_required": 2.5
+      },
+      "candle_time": "2026-01-06T12:00:00+00:00",
+      "news": {
+        "sentiment_score": 0.121,
+        "sentiment_label": "BULLISH",
+        "risk_multiplier": 1.0,
+        "high_impact": false,
+        "headlines": [
+          {
+            "source": "Mock Bloomberg",
+            "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:55:20.551426"
+          },
+          {
+            "source": "Mock Reuters",
+            "headline": "Dollar retreats from weekly highs, supporting precious metals",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.375,
+            "is_high_impact": false,
+            "published": "2026-01-06T14:05:20.551426"
+          },
+          {
+            "source": "Mock Financial Times",
+            "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.5,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:40:20.551426"
+          },
+          {
+            "source": "Mock MarketWatch",
+            "headline": "Treasury yields inch higher ahead of jobs report",
+            "sentiment": "NEUTRAL",
+            "sentiment_score": 0.0,
+            "is_high_impact": false,
+            "published": "2026-01-06T12:10:20.551426"
+          },
+          {
+            "source": "Mock WSJ",
+            "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+            "sentiment": "BULLISH",
+            "sentiment_score": 0.6,
+            "is_high_impact": false,
+            "published": "2026-01-06T09:50:20.551426"
+          }
+        ],
+        "block_status": {
+          "is_blocked": false,
+          "can_trade": true,
+          "reason": null,
+          "details": null,
+          "ui_wording": null,
+          "event_age_minutes": null,
+          "block_expires_in_minutes": null
+        }
+      }
     }
   },
-  "news": null
+  "news": {
+    "sentiment_score": 0.121,
+    "sentiment_label": "BULLISH",
+    "bullish_count": 1,
+    "bearish_count": 0,
+    "neutral_count": 1,
+    "high_impact_events": [],
+    "upcoming_events": [],
+    "headlines": [
+      {
+        "source": "Mock Bloomberg",
+        "headline": "Gold holds steady near $2,650 as investors assess Fed outlook",
+        "sentiment": "NEUTRAL",
+        "sentiment_score": 0.0,
+        "is_high_impact": false,
+        "published": "2026-01-06T14:55:20.551426"
+      },
+      {
+        "source": "Mock Reuters",
+        "headline": "Dollar retreats from weekly highs, supporting precious metals",
+        "sentiment": "BULLISH",
+        "sentiment_score": 0.375,
+        "is_high_impact": false,
+        "published": "2026-01-06T14:05:20.551426"
+      },
+      {
+        "source": "Mock Financial Times",
+        "headline": "Asian central banks add 45 tonnes to gold reserves in December",
+        "sentiment": "BULLISH",
+        "sentiment_score": 0.5,
+        "is_high_impact": false,
+        "published": "2026-01-06T12:40:20.551426"
+      },
+      {
+        "source": "Mock MarketWatch",
+        "headline": "Treasury yields inch higher ahead of jobs report",
+        "sentiment": "NEUTRAL",
+        "sentiment_score": 0.0,
+        "is_high_impact": false,
+        "published": "2026-01-06T12:10:20.551426"
+      },
+      {
+        "source": "Mock WSJ",
+        "headline": "Geopolitical tensions keep safe-haven demand for gold elevated",
+        "sentiment": "BULLISH",
+        "sentiment_score": 0.6,
+        "is_high_impact": false,
+        "published": "2026-01-06T09:50:20.551426"
+      }
+    ],
+    "can_trade": true,
+    "block_reason": null
+  }
 }

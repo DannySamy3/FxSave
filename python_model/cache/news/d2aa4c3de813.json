@@ -1,15 +1,5 @@
 {
-  "cached_at": "2026-01-07T10:15:11.682727",
+  "cached_at": "2026-01-07T11:16:05.320207",
   "key": "finnhub_forex_news",
-  "content": [
-    {
-      "source": "Finnhub (Forexlive)",
-      "headline": "Latest Australian inflation data keeps February interest rate hike on the table",
-      "summary": "<p class=\"text-align-justify\">In case you missed the release and the earlier headlines:</p><ul><li><a href=\"https://investinglive.com/news/data-australian-cpi-november-2024-34-yy-20260107/\" rel=\"follo",
-      "url": "https://investinglive.com/news/latest-australian-inflation-data-keeps-february-interest-rate-hike-on-the-table-20260107/",
-      "published": "2026-01-07T08:35:36",
-      "is_high_impact": false,
-      "category": "USD/Forex"
-    }
-  ]
+  "content": []
 }
