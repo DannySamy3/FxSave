@@ -1,45 +1,35 @@
 /**
- * Gold Price Prediction Dashboard - Live Trading Edition v2.1
- * 
- * Features:
- * - Multi-timeframe predictions
- * - Live/rolling prediction support
- * - Auto-refresh capability
- * - HTF conflict display
- * - Position calculator
- * - System status monitoring
+ * Gold Price Prediction Dashboard - Professional Forex Edition v4.0
+ * Complete redesign as professional trading platform
  */
 
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
-// Standardized rejection messages
 const REJECTION_MSG = {
-  "LOW_CONFIDENCE": "Low Confidence Score",
-  "HTF_CONFLICT": "Higher Timeframe Conflict",
-  "BAD_RR": "Insufficient Reward/Risk Ratio",
-  "HIGH_VOLATILITY": "Extreme Volatility (News/Crash)",
-  "RANGE_MARKET": "Market in Range (No Trend)",
-  "LOW_VOLATILITY": "Low Volatility (Dead Market)",
-  "REGIME_FILTER": "Market Regime Unfavorable",
-  "SL_TOO_TIGHT": "Stop Loss Too Tight",
-  "ZERO_RISK": "Zero Risk Allocation",
-  "LOT_CALC_ERROR": "Position Size Calculation Error",
-  "INSUFFICIENT_DATA": "Insufficient Market Data",
-  // News-related rejections
-  "HIGH_IMPACT_NEWS": "High-Impact News Event",
-  "CALENDAR_BLACKOUT": "Economic Calendar Blackout",
-  "EVENT_IMMINENT": "Major Economic Event Imminent",
-  "NEWS_NEGATIVE_SENTIMENT": "Strong Negative News Sentiment",
-  "CALIBRATION_UNSTABLE": "Calibration Drift Exceeds Safe Limit",
-  "CALIBRATION_WARNING": "Calibration Drift Warning"
+  LOW_CONFIDENCE: "Low Confidence Score",
+  HTF_CONFLICT: "Higher Timeframe Conflict",
+  BAD_RR: "Insufficient Reward/Risk Ratio",
+  HIGH_VOLATILITY: "Extreme Volatility (News/Crash)",
+  RANGE_MARKET: "Market in Range (No Trend)",
+  LOW_VOLATILITY: "Low Volatility (Dead Market)",
+  REGIME_FILTER: "Market Regime Unfavorable",
+  SL_TOO_TIGHT: "Stop Loss Too Tight",
+  ZERO_RISK: "Zero Risk Allocation",
+  LOT_CALC_ERROR: "Position Size Calculation Error",
+  INSUFFICIENT_DATA: "Insufficient Market Data",
+  HIGH_IMPACT_NEWS: "High-Impact News Event",
+  CALENDAR_BLACKOUT: "Economic Calendar Blackout",
+  EVENT_IMMINENT: "Major Economic Event Imminent",
+  NEWS_NEGATIVE_SENTIMENT: "Strong Negative News Sentiment",
+  CALIBRATION_UNSTABLE: "Calibration Drift Exceeds Safe Limit",
+  CALIBRATION_WARNING: "Calibration Drift Warning",
 };
 
-// HTF status labels
 const HTF_STATUS_LABELS = {
-  "ALIGNED": "✅ Aligned",
-  "SOFT_CONFLICT": "⚠️ Partial Conflict",
-  "HARD_CONFLICT": "❌ HTF Conflict"
+  ALIGNED: "✅ Aligned",
+  SOFT_CONFLICT: "⚠️ Partial",
+  HARD_CONFLICT: "❌ Conflict",
 };
 
 export default function Home() {
@@ -49,41 +39,26 @@ export default function Home() {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(null);
-  
-  // Live mode state
   const [liveMode, setLiveMode] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(true);
-  const [refreshInterval, setRefreshInterval] = useState(60); // seconds
+  const [refreshInterval, setRefreshInterval] = useState(60);
   const [systemStatus, setSystemStatus] = useState(null);
-  
-  // Risk Management State
   const [accountBalance, setAccountBalance] = useState(10000);
   const [riskPercentage, setRiskPercentage] = useState(1);
-  
-  // News state
   const [newsData, setNewsData] = useState(null);
-  const [showNewsPanel, setShowNewsPanel] = useState(true);
-  
-  // Economic Calendar state
-  const [showCalendar, setShowCalendar] = useState(true);
 
   const TIMEFRAMES = ["15m", "30m", "1h", "4h", "1d"];
 
-  // Fetch predictions - no dependencies to prevent loops
   const fetchPrediction = async (showLoading = true) => {
     try {
       if (showLoading) setLoading(true);
       const res = await fetch(`/api/predict?t=${Date.now()}`);
       if (!res.ok) throw new Error("Failed to load predictions");
-      
       const json = await res.json();
       setData(json);
       setLastUpdate(new Date());
       setError(null);
-      
-      // Check if in live mode
       setLiveMode(json.mode === "live");
-      
     } catch (err) {
       console.error(err);
       setError("Failed to load prediction data.");
@@ -92,7 +67,6 @@ export default function Home() {
     }
   };
 
-  // Fetch system status
   const fetchStatus = async () => {
     try {
       const res = await fetch("/api/status");
@@ -105,7 +79,6 @@ export default function Home() {
     }
   };
 
-  // Fetch news data
   const fetchNews = async () => {
     try {
       const res = await fetch("/api/news");
@@ -118,34 +91,26 @@ export default function Home() {
     }
   };
 
-  // Initial load only - runs once
   useEffect(() => {
     fetchPrediction(true);
     fetchStatus();
     fetchNews();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Auto-refresh setup - separate effect
   useEffect(() => {
     if (!autoRefresh) return;
-    
     const predictionInterval = setInterval(() => {
       fetchPrediction(false);
     }, refreshInterval * 1000);
-    
     const statusInterval = setInterval(fetchStatus, 30000);
-    const newsInterval = setInterval(fetchNews, 60000); // Refresh news every minute
-    
+    const newsInterval = setInterval(fetchNews, 60000);
     return () => {
       clearInterval(predictionInterval);
       clearInterval(statusInterval);
       clearInterval(newsInterval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoRefresh, refreshInterval]);
 
-  // Manual refresh (batch mode)
   const handleBatchUpdate = async () => {
     try {
       setUpdating(true);
@@ -160,14 +125,12 @@ export default function Home() {
     }
   };
 
-  // Live prediction trigger
   const handleLiveUpdate = async () => {
     try {
       setUpdating(true);
       setError(null);
       const res = await fetch("/api/live-predict", { method: "POST" });
       if (!res.ok) throw new Error("Live prediction failed");
-      
       const result = await res.json();
       if (result.predictions) {
         setData(result.predictions);
@@ -183,445 +146,315 @@ export default function Home() {
     }
   };
 
-  // Position size calculator
   const calculatePositionSize = (setup) => {
     if (!setup || !setup.stop_distance || setup.stop_distance <= 0) {
       return "0.00";
     }
-    
     const riskAmount = (accountBalance * riskPercentage) / 100;
     const contractSize = 100;
     const stopDist = parseFloat(setup.stop_distance);
-    
     const lots = riskAmount / (stopDist * contractSize);
     return Math.max(0.01, Math.floor(lots * 100) / 100).toFixed(2);
   };
 
-  // Get human-readable rejection message
   const getRejectionMessage = (code) => {
     if (!code) return "Unknown";
     return REJECTION_MSG[code] || code;
   };
 
-  // Format time since last update
   const getTimeSinceUpdate = () => {
     if (!lastUpdate) return "Never";
     const seconds = Math.floor((new Date() - lastUpdate) / 1000);
-    if (seconds < 60) return `${seconds}s ago`;
+    if (seconds < 60) return `${seconds}s`;
     const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
+    if (minutes < 60) return `${minutes}m`;
     const hours = Math.floor(minutes / 60);
-    return `${hours}h ago`;
+    return `${hours}h`;
   };
 
-  // Get current timeframe data
   const currentTF = data?.predictions?.[selectedTimeframe];
-  const hasCalibrationWarning = currentTF && currentTF.calibration_drift > 15;
-  
-  // Helper for sentiment color
-  const getSentimentColor = (score) => {
-    if (score > 0.2) return '#16a34a'; // green
-    if (score < -0.2) return '#dc2626'; // red
-    return '#6b7280'; // gray
-  };
-  
-  // Helper for sentiment label
-  const getSentimentIcon = (label) => {
-    if (label === 'BULLISH') return '📈';
-    if (label === 'BEARISH') return '📉';
-    return '➡️';
-  };
-  
-  // Check if news is blocking trades
-  const newsBlocksTrade = newsData && !newsData.can_trade;
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>🥇 Gold Price</h1>
-        <p className={styles.subtitle}>
-          {liveMode ? "🔴 LIVE" : "📦 BATCH"} • Multi-Timeframe AI
-        </p>
+    <div className={styles.containerPro}>
+      {/* TOP NAVIGATION BAR */}
+      <header className={styles.headerPro}>
+        <div className={styles.headerLeft}>
+          <h1>🥇 Gold Trader Pro</h1>
+          <div className={styles.modeIndicator}>
+            <span className={styles.liveIndicator}></span>
+            {liveMode ? "🔴 LIVE" : "📦 BATCH"}
+          </div>
+        </div>
+        <div className={styles.statusBadges}>
+          <div className={styles.badge}>
+            <span className={styles.badgeLabel}>Status:</span>
+            <span className={styles.badgeValue}>{getTimeSinceUpdate()} ago</span>
+          </div>
+          <div className={styles.badge}>
+            <span className={styles.badgeLabel}>Mode:</span>
+            <span className={styles.badgeValue}>{liveMode ? "Live" : "Batch"}</span>
+          </div>
+        </div>
       </header>
 
-      {/* LEFT SIDEBAR - Navigation */}
-      <aside className={styles.sidebar}>
-        {/* Predictions Section */}
-        <div className={styles.sidebarSection}>
-          <div className={styles.sectionTitle}>Predictions</div>
-          {TIMEFRAMES.map((tf) => {
-            const tfData = data?.predictions?.[tf];
-            const isActive = selectedTimeframe === tf;
-            const isNoTrade = tfData?.decision === "NO_TRADE";
-            const direction = tfData?.direction || "?";
-            const confidence = tfData?.confidence || 0;
-            
-            return (
+      {/* MAIN TRADING FLOOR */}
+      <div className={styles.mainPro}>
+        {/* LEFT PANEL - MAIN ANALYSIS */}
+        <div className={styles.leftPanelPro}>
+          {/* CHART PLACEHOLDER */}
+          <div className={styles.chartContainer}>
+            <div className={styles.chartHeader}>
+              <h2>XAUUSD - 1H</h2>
+              <div className={styles.chartControls}>
+                <span className={styles.priceDisplay}>
+                  {currentTF?.current_price || "Loading..."} USD
+                </span>
+              </div>
+            </div>
+            <div className={styles.chartPlaceholder}>
+              <div className={styles.chartGrid}>
+                <svg width="100%" height="100%" style={{ opacity: 0.2 }}>
+                  <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3b82f6" strokeWidth="0.5"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+                <div style={{ position: 'absolute', bottom: '50%', left: '50%', transform: 'translate(-50%, 50%)', color: '#94a3b8', fontSize: '14px', textAlign: 'center' }}>
+                  📈 Chart Integration Coming Soon
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* TIMEFRAME SELECTOR */}
+          <div className={styles.timeframeNav}>
+            {TIMEFRAMES.map((tf) => (
               <button
                 key={tf}
-                className={`${styles.navButton} ${isActive ? styles.active : ''}`}
                 onClick={() => setSelectedTimeframe(tf)}
-                title={`${tf} - ${direction} ${confidence.toFixed(1)}%`}
+                className={`${styles.tfButton} ${selectedTimeframe === tf ? styles.tfActive : ""}`}
               >
-                <span>{tf.toUpperCase()}</span>
-                <span style={{marginLeft: 'auto', fontSize: '0.8rem'}}>
-                  {direction} {confidence.toFixed(0)}%
-                </span>
-                {isNoTrade && (
-                  <span className={styles.statusBadge}>
-                    ⛔
-                  </span>
-                )}
+                {tf.toUpperCase()}
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* System Status */}
-        <div className={styles.sidebarSection}>
-          <div className={styles.sectionTitle}>System</div>
-          <div className={styles.systemStatus}>
-            <h4>Status</h4>
-            <div className={styles.statusItem}>
-              <span>Mode</span>
-              <span style={{fontWeight: 600}}>{liveMode ? '🔴 Live' : '📦 Batch'}</span>
+          {/* MARKET DATA GRID */}
+          <div className={styles.marketDataGrid}>
+            <div className={styles.dataCard}>
+              <label>Current Price</label>
+              <div className={styles.dataValue}>${currentTF?.current_price || "N/A"}</div>
             </div>
-            <div className={styles.statusItem}>
-              <span>Updated</span>
-              <span style={{fontWeight: 600, fontSize: '0.75rem'}}>{getTimeSinceUpdate()}</span>
+            <div className={styles.dataCard}>
+              <label>Regime</label>
+              <div className={styles.dataValue}>{currentTF?.regime || "N/A"}</div>
             </div>
-            <div className={styles.statusItem}>
-              <span>Auto-Refresh</span>
-              <span style={{fontWeight: 600}}>
-                {autoRefresh ? `${refreshInterval}s` : 'OFF'}
-              </span>
+            <div className={styles.dataCard}>
+              <label>Volatility</label>
+              <div className={styles.dataValue}>{currentTF?.volatility_level || "N/A"}</div>
+            </div>
+            <div className={styles.dataCard}>
+              <label>Trend Strength</label>
+              <div className={styles.dataValue}>{currentTF?.trend_strength || "N/A"}</div>
             </div>
           </div>
-        </div>
 
-        {/* Controls Section */}
-        <div className={styles.sidebarSection}>
-          <div className={styles.sectionTitle}>Controls</div>
-          <label className={styles.navButton} style={{marginBottom: '10px', cursor: 'pointer'}}>
-            <input
-              type="checkbox"
-              checked={autoRefresh}
-              onChange={(e) => setAutoRefresh(e.target.checked)}
-              style={{width: '16px', height: '16px'}}
-            />
-            <span>Auto-Refresh</span>
-          </label>
-          <select 
-            value={refreshInterval} 
-            onChange={(e) => setRefreshInterval(Number(e.target.value))}
-            className={styles.navButton}
-            style={{
-              background: 'rgba(255,255,255,0.1)',
-              marginBottom: '10px',
-              padding: '10px 12px'
-            }}
-            disabled={!autoRefresh}
-          >
-            <option value={30}>30s</option>
-            <option value={60}>1m</option>
-            <option value={300}>5m</option>
-            <option value={900}>15m</option>
-          </select>
-          <button 
-            className={styles.navButton}
-            onClick={handleBatchUpdate} 
-            disabled={updating}
-            style={{marginBottom: '6px', opacity: updating ? 0.5 : 1}}
-          >
-            📦 Batch
-          </button>
-          <button 
-            className={styles.navButton}
-            onClick={handleLiveUpdate} 
-            disabled={updating}
-            style={{opacity: updating ? 0.5 : 1}}
-          >
-            🔴 Live
-          </button>
-        </div>
-
-        {/* Risk Management */}
-        <div className={styles.sidebarSection}>
-          <div className={styles.sectionTitle}>Risk</div>
-          <div style={{padding: '0 10px'}}>
-            <label style={{display: 'block', fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', fontWeight: 500}}>
-              Account Balance
-            </label>
-            <input 
-              type="number"
-              value={accountBalance}
-              onChange={(e) => setAccountBalance(Number(e.target.value))}
-              style={{
-                width: '100%',
-                padding: '8px',
-                borderRadius: '6px',
-                border: '1px solid rgba(255,255,255,0.2)',
-                background: 'rgba(255,255,255,0.05)',
-                color: 'white',
-                marginBottom: '12px',
-                fontSize: '0.9rem'
-              }}
-            />
-            <label style={{display: 'block', fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', fontWeight: 500}}>
-              Risk Per Trade
-            </label>
-            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-              <input 
-                type="range"
-                min="0.1"
-                max="5"
-                step="0.1"
-                value={riskPercentage}
-                onChange={(e) => setRiskPercentage(Number(e.target.value))}
-                style={{flex: 1}}
-              />
-              <span style={{color: '#ffd700', fontWeight: 600, fontSize: '0.9rem', minWidth: '30px'}}>
-                {riskPercentage.toFixed(1)}%
-              </span>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* MAIN CONTENT */}
-      <main className={styles.main}>
-        <div className={styles.contentArea}>
-          {/* Loading State */}
-          {loading && !data && (
-            <div className={styles.card}>
-              <div className={styles.loadingSpinner}>
+          {/* TRADE DECISION BOX */}
+          <div className={styles.decisionBox}>
+            {loading ? (
+              <div className={styles.loadingState}>
                 <div className={styles.spinner}></div>
-                <p>Loading market data...</p>
+                <p>Analyzing market...</p>
               </div>
-            </div>
-          )}
-
-          {/* Updating Overlay */}
-          {updating && (
-            <div className={styles.overlay}>
-              <div className={styles.card}>
-                <div className={styles.loadingSpinner}>
-                  <div className={styles.spinner}></div>
-                  <p>{liveMode ? "Running Live Prediction..." : "Analyzing Market Data..."}</p>
-                  <small>Fetching data and running XGBoost models</small>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Error Display */}
-          {error && (
-            <div className={styles.card}>
-              <div className={styles.errorBox}>
-                <p>⚠️ {error}</p>
-                <div className={styles.errorActions}>
-                  <button onClick={handleBatchUpdate} className={styles.retryButton}>Batch Update</button>
-                  <button onClick={handleLiveUpdate} className={styles.retryButton}>Live Update</button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {currentTF && !loading && !updating && (
-            <>
-              {/* Timeframe Tabs */}
-              <div className={styles.timeframeTabs}>
-                {TIMEFRAMES.map((tf) => {
-                  const tfData = data?.predictions?.[tf];
-                  const isNoTrade = tfData?.decision === "NO_TRADE";
-                  const hasConflict = tfData?.htf_status === "HARD_CONFLICT";
-                  return (
-                    <button
-                      key={tf}
-                      className={`${styles.tabButton} ${selectedTimeframe === tf ? styles.activeTab : ''} ${isNoTrade ? styles.noTradeTab : ''}`}
-                      onClick={() => setSelectedTimeframe(tf)}
-                    >
-                      {tf.toUpperCase()}
-                      {isNoTrade && <span className={styles.tabIndicator}>{hasConflict ? "🔗" : "⛔"}</span>}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Stale News Warning */}
-              {newsData && newsData.news_stale && newsData.news_age_minutes && (
-                <div className={styles.warningBanner} style={{backgroundColor: '#fef3c7', borderColor: '#f59e0b'}}>
-                  ℹ️ News Ignored ({Math.round(newsData.news_age_minutes)} min old) • No restrictions applied
-                </div>
-              )}
-
-              {/* High-Impact Block */}
-              {newsBlocksTrade && newsData.news_block && (
-                <div className={styles.newsBlockBanner}>
-                  🔴 TRADING BLOCKED • High-Impact News
-                  {newsData.news_block.block_expires_in_minutes && (
-                    <br />
-                  )}
-                  Block Expires: {Math.round(newsData.news_block.block_expires_in_minutes)} min
-                </div>
-              )}
-
-              {/* News Check Passed */}
-              {newsData && !newsBlocksTrade && !newsData.news_stale && (
-                <div className={styles.warningBanner} style={{backgroundColor: '#d1fae5', borderColor: '#10b981'}}>
-                  ✅ News Check Passed • {newsData.headlines?.length || 0} items
-                </div>
-              )}
-
-              {/* Main Prediction Card */}
-              <div className={`${styles.card} ${styles.mainCard}`}>
-                {currentTF.decision !== "TRADE" ? (
-                  <div className={styles.rejectionBanner}>
-                    <h3>⛔ NO TRADE</h3>
-                    <div className={styles.rejectionDetails}>
-                      <div className={styles.rejectionRow}>
-                        <span>Decision:</span>
-                        <strong>NO_TRADE</strong>
-                      </div>
-                      <div className={styles.rejectionRow}>
-                        <span>Risk Allocation:</span>
-                        <strong>0%</strong>
-                      </div>
-                      <div className={styles.rejectionRow}>
-                        <span>Capital at Risk:</span>
-                        <strong>$0.00</strong>
-                      </div>
-                      <div className={styles.rejectionRow}>
-                        <span>Reason:</span>
-                        <strong style={{color: '#b91c1c'}}>
-                          {getRejectionMessage(currentTF.rejection_reason)}
-                        </strong>
-                      </div>
-                    </div>
-                    <div className={styles.noTradeInfo}>
-                      <small>
-                        Model predicted <strong>{currentTF.direction}</strong> with {currentTF.confidence}% confidence (blocked by rules)
-                      </small>
-                    </div>
+            ) : currentTF?.decision === "TRADE" ? (
+              <div className={`${styles.tradeSignal} ${currentTF?.direction === "UP" ? styles.upSignal : styles.downSignal}`}>
+                <div className={styles.directionBox}>
+                  <div className={styles.arrow}>{currentTF?.direction === "UP" ? "📈" : "📉"}</div>
+                  <div className={styles.directionText}>
+                    <span className={styles.directionLabel}>{currentTF?.direction}</span>
+                    <span className={styles.confidence}>
+                      {currentTF?.confidence?.toFixed(1) || "0"}% Confidence
+                    </span>
                   </div>
-                ) : (
-                  <div className={`${styles.predictionBox} ${currentTF.direction === "UP" ? styles.predictionUp : styles.predictionDown}`}>
-                    <div className={styles.predictionArrow}>
-                      {currentTF.direction === "UP" ? "📈" : "📉"}
-                    </div>
-                    <div className={styles.predictionText}>
-                      <h2>{currentTF.direction}</h2>
-                      <p className={styles.confidence}>{currentTF.confidence}% Confidence</p>
-                      {currentTF.htf_status === 'SOFT_CONFLICT' && (
-                        <small className={styles.softConflict}>⚠️ Risk reduced (HTF partial conflict)</small>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.noTradeSignal}>
+                <div className={styles.noTradeIcon}>⛔</div>
+                <div className={styles.noTradeContent}>
+                  <div className={styles.noTradeTitle}>NO TRADE</div>
+                  <div className={styles.noTradeReason}>
+                    {getRejectionMessage(currentTF?.rejection_reason)}
+                  </div>
+                  <div className={styles.noTradeDetails}>
+                    {currentTF?.direction} {currentTF?.confidence?.toFixed(1)}% • Blocked by rules
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* MULTI-TIMEFRAME ANALYSIS */}
+          <div className={styles.multiTimeframeBox}>
+            <h3>Multi-Timeframe Analysis</h3>
+            <div className={styles.mtfGrid}>
+              {TIMEFRAMES.map((tf) => {
+                const tfData = data?.predictions?.[tf];
+                return (
+                  <div key={tf} className={styles.mtfItem}>
+                    <div className={styles.mtfTimeframe}>{tf.toUpperCase()}</div>
+                    <div className={`${styles.mtfSignal} ${tfData?.decision === "TRADE" ? styles.tradeSignalSmall : styles.noTradeSmall}`}>
+                      {tfData?.decision === "TRADE" ? (
+                        <>
+                          <span className={styles.mtfDirection}>{tfData?.direction}</span>
+                          <span className={styles.mtfConfidence}>{tfData?.confidence?.toFixed(0)}%</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>NO TRADE</span>
+                          <span className={styles.mtfReason}>{tfData?.confidence?.toFixed(0)}%</span>
+                        </>
                       )}
                     </div>
                   </div>
-                )}
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
-                <div className={styles.priceInfo}>
-                  <div className={styles.priceBox}>
-                    <label>Current Price</label>
-                    <span>${currentTF.current_price}</span>
-                  </div>
-                  <div className={styles.priceBox}>
-                    <label>Market Regime</label>
-                    <span className={styles.regimeTag}>{currentTF.regime || "UNKNOWN"}</span>
-                  </div>
-                </div>
-
-                {/* HTF Alignment Status */}
-                {currentTF.htf_status && (
-                  <div className={styles.htfStatus}>
-                    <label>HTF Alignment</label>
-                    <span className={`${styles.htfBadge} ${styles[`htf${currentTF.htf_status}`]}`}>
-                      {HTF_STATUS_LABELS[currentTF.htf_status] || currentTF.htf_status}
-                    </span>
-                  </div>
-                )}
+        {/* RIGHT SIDEBAR - CONTROLS & INFO */}
+        <div className={styles.rightSidebarPro}>
+          {/* TRADE SETUP CARD */}
+          {currentTF?.decision === "TRADE" && currentTF?.setup && (
+            <div className={styles.setupCard}>
+              <h3>📍 Trade Setup</h3>
+              <div className={styles.setupRow}>
+                <span className={styles.setupLabel}>Entry</span>
+                <span className={styles.setupValue}>${currentTF.setup.entry || "N/A"}</span>
               </div>
+              <div className={styles.setupRow}>
+                <span className={styles.setupLabel}>Stop Loss</span>
+                <span className={styles.setupValue}>${currentTF.setup.stop_loss || "N/A"}</span>
+              </div>
+              <div className={styles.setupRow}>
+                <span className={styles.setupLabel}>Take Profit</span>
+                <span className={styles.setupValue}>${currentTF.setup.take_profit || "N/A"}</span>
+              </div>
+              <div className={styles.setupDivider}></div>
+              <div className={styles.setupRow}>
+                <span className={styles.setupLabel}>RR Ratio</span>
+                <span className={styles.setupValue}>{currentTF.setup.rr_ratio?.toFixed(2) || "N/A"}</span>
+              </div>
+              <div className={styles.setupRow}>
+                <span className={styles.setupLabel}>Position Size</span>
+                <span className={styles.setupValue}>{calculatePositionSize(currentTF.setup)} Lots</span>
+              </div>
+            </div>
+          )}
 
-              {/* Trade Setup Card */}
-              {currentTF.decision === "TRADE" && currentTF.setup && (
-                <div className={styles.card}>
-                  <h3>🎯 Trade Setup ({selectedTimeframe})</h3>
-                  <div className={styles.setupGrid}>
-                    <div className={styles.setupItem}>
-                      <label>ENTRY</label>
-                      <span className={styles.entryPrice}>${currentTF.setup.entry}</span>
-                    </div>
-                    <div className={styles.setupItem}>
-                      <label>STOP LOSS</label>
-                      <span className={styles.slPrice}>${currentTF.setup.sl}</span>
-                    </div>
-                    <div className={styles.setupItem}>
-                      <label>TAKE PROFIT</label>
-                      <span className={styles.tpPrice}>${currentTF.setup.tp}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
+          {/* RISK MANAGEMENT PANEL */}
+          <div className={styles.riskPanel}>
+            <h3>💰 Risk Management</h3>
+            <div className={styles.riskItem}>
+              <label>Account Balance</label>
+              <input
+                type="number"
+                value={accountBalance}
+                onChange={(e) => setAccountBalance(Number(e.target.value))}
+                className={styles.riskInput}
+              />
+            </div>
+            <div className={styles.riskItem}>
+              <label>Risk per Trade</label>
+              <div className={styles.riskSliderContainer}>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="5"
+                  step="0.1"
+                  value={riskPercentage}
+                  onChange={(e) => setRiskPercentage(Number(e.target.value))}
+                  className={styles.riskSlider}
+                />
+                <span className={styles.riskValue}>{riskPercentage.toFixed(1)}%</span>
+              </div>
+            </div>
+            <div className={styles.riskInfo}>
+              <div className={styles.riskInfoRow}>
+                <span>Risk Amount:</span>
+                <strong>${((accountBalance * riskPercentage) / 100).toFixed(2)}</strong>
+              </div>
+              <div className={styles.riskInfoRow}>
+                <span>Account Risk:</span>
+                <strong>{riskPercentage.toFixed(1)}%</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* SYSTEM STATUS */}
+          <div className={styles.statusPanel}>
+            <h3>⚙️ System Status</h3>
+            <div className={styles.statusItem}>
+              <span>Mode</span>
+              <strong>{liveMode ? "🔴 LIVE" : "📦 BATCH"}</strong>
+            </div>
+            <div className={styles.statusItem}>
+              <span>Last Update</span>
+              <strong>{getTimeSinceUpdate()}</strong>
+            </div>
+            <div className={styles.statusItem}>
+              <span>Auto-Refresh</span>
+              <strong>{autoRefresh ? `${refreshInterval}s` : "Off"}</strong>
+            </div>
+            {newsData && (
+              <div className={styles.statusItem}>
+                <span>News Status</span>
+                <strong>{newsData.can_trade ? "✅ Clear" : "⛔ Blocked"}</strong>
+              </div>
+            )}
+          </div>
+
+          {/* CONTROL BUTTONS */}
+          <div className={styles.controlButtons}>
+            <label className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                checked={autoRefresh}
+                onChange={(e) => setAutoRefresh(e.target.checked)}
+              />
+              Auto-Refresh
+            </label>
+            <select
+              value={refreshInterval}
+              onChange={(e) => setRefreshInterval(Number(e.target.value))}
+              className={styles.refreshSelect}
+              disabled={!autoRefresh}
+            >
+              <option value="30">30 seconds</option>
+              <option value="60">1 minute</option>
+              <option value="300">5 minutes</option>
+              <option value="900">15 minutes</option>
+            </select>
+            <button onClick={handleBatchUpdate} className={styles.batchBtn} disabled={updating}>
+              {updating ? "Updating..." : "📦 Batch Update"}
+            </button>
+            <button onClick={handleLiveUpdate} className={styles.liveBtn} disabled={updating}>
+              {updating ? "Running..." : "🔴 Live Predict"}
+            </button>
+          </div>
+
+          {/* ERROR DISPLAY */}
+          {error && (
+            <div className={styles.errorPanel}>
+              <div className={styles.errorTitle}>⚠️ Error</div>
+              <div className={styles.errorMessage}>{error}</div>
+            </div>
           )}
         </div>
-      </main>
-
-      {/* RIGHT SIDEBAR - Quick Stats */}
-      <aside className={styles.rightSidebar}>
-        {/* Quick Stats */}
-        <div className={styles.miniCard}>
-          <h4>📊 Quick Stats</h4>
-          <label>Total Signals</label>
-          <span>{data?.prediction_count || 0}</span>
-          <small>All timeframes combined</small>
-        </div>
-
-        {/* Current Price */}
-        <div className={styles.miniCard}>
-          <h4>💰 Current Price</h4>
-          <label>Gold (GC=F)</label>
-          <span>${currentTF?.current_price || "-"}</span>
-          <small>Live market data</small>
-        </div>
-
-        {/* Position Calculator */}
-        {currentTF?.decision === "TRADE" && currentTF?.setup && (
-          <div className={styles.miniCard}>
-            <h4>📍 Position Size</h4>
-            <label>Recommended Lots</label>
-            <span>{calculatePositionSize(currentTF.setup)}</span>
-            <small>Based on {riskPercentage.toFixed(1)}% risk</small>
-          </div>
-        )}
-
-        {/* News Status */}
-        {newsData && (
-          <div className={styles.miniCard}>
-            <h4>{newsBlocksTrade ? '🔴' : '✅'} News Status</h4>
-            <label>Trading Status</label>
-            <span>{newsBlocksTrade ? 'BLOCKED' : 'ALLOWED'}</span>
-            <small>{newsData.headlines?.length || 0} news items</small>
-          </div>
-        )}
-
-        {/* Risk Management */}
-        <div className={styles.miniCard}>
-          <h4>⚠️ Risk Info</h4>
-          <label>Account</label>
-          <span>${accountBalance}</span>
-          <small>Risk per trade: {riskPercentage.toFixed(1)}%</small>
-        </div>
-
-        {/* System Info */}
-        {systemStatus && (
-          <div className={styles.miniCard}>
-            <h4>🔧 System</h4>
-            <label>Version</label>
-            <span>{systemStatus.version || "2.2.0"}</span>
-            <small>Last updated: {getTimeSinceUpdate()}</small>
-          </div>
-        )}
-      </aside>
+      </div>
     </div>
   );
 }
